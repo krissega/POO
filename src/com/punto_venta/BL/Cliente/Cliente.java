@@ -3,8 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.punto_venta.BL.Usuario;
+package com.punto_venta.BL.Cliente;
 
+import com.punto_venta.BL.Usuario.Usuario;
 import java.time.LocalDate;
 import java.util.Arrays;
 
