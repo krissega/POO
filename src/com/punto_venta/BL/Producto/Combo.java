@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.punto_venta.BL;
+package com.punto_venta.BL.Producto;
 
 import java.util.ArrayList;
 import java.util.Objects;
@@ -28,8 +28,9 @@ public class Combo {
         for (int i = 0; i < v_productos.size(); i++) {
             v_acumulator += v_productos.get(i).getV_precio();
         }
-        double v_disc = 0.15;
-        double v_prec = v_acumulator * v_disc;
+        double v_disc = 0.15;//como no dice que cantidad de descuento ni que regla de negocio sigue para registrar los combos cree un desc del 15%
+        double v_temp=v_acumulator * v_disc;
+        double v_prec = v_acumulator - v_temp;
         return v_prec;
     }
 
