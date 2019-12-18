@@ -23,6 +23,7 @@ import java.util.logging.Logger;
 public class UsuarioDAO extends DAO {
     
     private final String BUSCAR_TODOS = "SELECT * FROM usuarios";
+    private final String LOGIN = "SELECT * FROM usuarios WHERE NombreUsuario = ? AND Clave = ?";
     
     public List<Usuario> buscarTodos() {
         List<Usuario> usuarios = new ArrayList<>();
@@ -53,5 +54,23 @@ public class UsuarioDAO extends DAO {
     
     private PreparedStatement buscarTodosPs(Connection conn) throws SQLException {
         return conn.prepareStatement(BUSCAR_TODOS);
+    }
+    
+    public boolean autenticar(String nombreUsuario, String clave) {
+        try (Connection conn = DriverManager.getConnection(url, user, pass);
+                PreparedStatement ps = autenticarPs(conn, nombreUsuario, clave);
+                ResultSet rs = ps.executeQuery()) {
+            return rs.next();
+        } catch (SQLException ex) {
+            Logger.getLogger(UsuarioDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return false;
+    }
+    
+    private PreparedStatement autenticarPs(Connection conn, String nombreUsuario, String clave) throws SQLException {
+        PreparedStatement ps = conn.prepareStatement(LOGIN);
+        ps.setString(1, nombreUsuario);
+        ps.setString(2, clave);
+        return ps;
     }
 }
