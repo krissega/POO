@@ -23,11 +23,12 @@ public class Usuario {
     private String v_correo;
     private String v_pass;
     private String v_usuario;
-    private String [] v_nombre = new String[3];; //como pide los nombres separados de sus apellidos se hace con un arreglo de string para cada uno 
+    private String [] v_nombre = new String[3]; //como pide los nombres separados de sus apellidos se hace con un arreglo de string para cada uno 
     private LocalDate v_fechanac;
     private int v_edad;
     private String genero;
     private int v_telefono;
+    private String identificacion;
 
     public Usuario() {
     }
@@ -46,7 +47,7 @@ public class Usuario {
     }
     
     
-    private int age_calculator(LocalDate v_fechanac){
+    public static int age_calculator(LocalDate v_fechanac){
     LocalDate v_today= LocalDate.now();                        
     long v_years= ChronoUnit.YEARS.between(v_fechanac,v_today);
     return  Math.toIntExact(v_years);
@@ -135,10 +136,29 @@ public class Usuario {
     public void setV_telefono(int v_telefono) {
         this.v_telefono = v_telefono;
     }
+    
+    public String getIdentificacion() {
+        return identificacion;
+    }
+    
+    public void setIdentificacion(String identificacion) {
+        this.identificacion = identificacion;
+    }
 
     @Override
     public int hashCode() {
         int hash = 7;
+        hash = 89 * hash + Objects.hashCode(this.v_key_type);
+        hash = 89 * hash + this.v_ID;
+        hash = 89 * hash + Objects.hashCode(this.v_correo);
+        hash = 89 * hash + Objects.hashCode(this.v_pass);
+        hash = 89 * hash + Objects.hashCode(this.v_usuario);
+        hash = 89 * hash + Arrays.deepHashCode(this.v_nombre);
+        hash = 89 * hash + Objects.hashCode(this.v_fechanac);
+        hash = 89 * hash + this.v_edad;
+        hash = 89 * hash + Objects.hashCode(this.genero);
+        hash = 89 * hash + this.v_telefono;
+        hash = 89 * hash + Objects.hashCode(this.identificacion);
         return hash;
     }
 
@@ -163,6 +183,9 @@ public class Usuario {
         if (this.v_telefono != other.v_telefono) {
             return false;
         }
+        if (!Objects.equals(this.v_key_type, other.v_key_type)) {
+            return false;
+        }
         if (!Objects.equals(this.v_correo, other.v_correo)) {
             return false;
         }
@@ -173,6 +196,9 @@ public class Usuario {
             return false;
         }
         if (!Objects.equals(this.genero, other.genero)) {
+            return false;
+        }
+        if (!Objects.equals(this.identificacion, other.identificacion)) {
             return false;
         }
         if (!Arrays.deepEquals(this.v_nombre, other.v_nombre)) {
@@ -186,7 +212,7 @@ public class Usuario {
 
     @Override
     public String toString() {
-        return "Usuario{" +"Tipo de Usuario "+ v_key_type+ "ID =" + v_ID + ", correo =" + v_correo + ", pass =" + v_pass + ", Nombre de usuario=" + v_usuario + ", nombre completo =" + v_nombre + ", fecha de nacimiento =" + v_fechanac + ", edad = " + v_edad + ", genero = " + genero + ", telefono = " + v_telefono + '}';
+        return "Usuario{Tipo de Usuario "+ v_key_type+ "ID =" + v_ID + ", correo =" + v_correo + ", pass =" + v_pass + ", Nombre de usuario=" + v_usuario + ", nombre completo =" + v_nombre + ", fecha de nacimiento =" + v_fechanac + ", edad = " + v_edad + ", genero = " + genero + ", telefono = " + v_telefono + ", identificacion = " + identificacion + '}';
     }
     
 
