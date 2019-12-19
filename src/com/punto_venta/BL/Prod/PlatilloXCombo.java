@@ -3,8 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.punto_venta.BL.Producto;
-
+package com.punto_venta.BL.Prod;
 import java.util.ArrayList;
 import java.util.Objects;
 
@@ -12,15 +11,15 @@ import java.util.Objects;
  *
  * @author krisa
  */
-public class Combo {
+public class PlatilloXCombo {
 
-    private ArrayList<Producto> v_productos;
+    private ArrayList<Platillo> v_productos;
     private double v_precio;
-    private String v_descripcion;
+    private String v_nombre;
 
-    public Combo(ArrayList<Producto> v_productos, String v_descripcion) {
+    public PlatilloXCombo(ArrayList<Platillo> v_productos, String v_descripcion) {
         this.v_productos = v_productos;
-        this.v_descripcion = v_descripcion;
+        this.v_nombre = v_descripcion;
     }
 
     public double price_calculator() {
@@ -34,11 +33,11 @@ public class Combo {
         return v_prec;
     }
 
-    public ArrayList<Producto> getV_productos() {
+    public ArrayList<Platillo> getV_productos() {
         return v_productos;
     }
 
-    public void setV_productos(ArrayList<Producto> v_productos) {
+    public void setV_productos(ArrayList<Platillo> v_productos) {
         this.v_productos = v_productos;
     }
 
@@ -50,12 +49,12 @@ public class Combo {
         this.v_precio = price_calculator();
     }
 
-    public String getV_descripcion() {
-        return v_descripcion;
+    public String getV_nombre() {
+        return v_nombre;
     }
 
-    public void setV_descripcion(String v_descripcion) {
-        this.v_descripcion = v_descripcion;
+    public void setV_nombre(String v_nombre) {
+        this.v_nombre = v_nombre;
     }
 
     @Override
@@ -75,11 +74,11 @@ public class Combo {
         if (getClass() != obj.getClass()) {
             return false;
         }
-        final Combo other = (Combo) obj;
+        final PlatilloXCombo other = (PlatilloXCombo) obj;
         if (Double.doubleToLongBits(this.v_precio) != Double.doubleToLongBits(other.v_precio)) {
             return false;
         }
-        if (!Objects.equals(this.v_descripcion, other.v_descripcion)) {
+        if (!Objects.equals(this.v_nombre, other.v_nombre)) {
             return false;
         }
         if (!Objects.equals(this.v_productos, other.v_productos)) {
@@ -90,7 +89,7 @@ public class Combo {
 
     @Override
     public String toString() {
-        return "Combo{" + " productos = " + v_productos + ", precio = " + v_precio + ", descripcion = " + v_descripcion + '}';
+        return "Combo{" + " productos = " + v_productos + ", precio = " + v_precio + ", descripcion = " + v_nombre + '}';
     }
 
 }

@@ -9,8 +9,10 @@ package com.punto_venta.BL.DAO;
  *
  * @author krisa
  */
-public abstract class DAO {
-    protected String url = "jdbc:mysql://localhost:3306/mundial?serverTimezone=CST&verifyServerCertificate=false&useSSL=true";
+public class DAO {
+
+    protected String url = "jdbc:mysql://localhost:3306/puntoventa?serverTimezone=CST&verifyServerCertificate=false&useSSL=true";
     protected String user = "root";
     protected String pass = "root";
+   
 }

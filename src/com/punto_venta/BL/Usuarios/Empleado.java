@@ -3,10 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.punto_venta.BL.Empleado;
+package com.punto_venta.BL.Usuarios;
 
-import com.punto_venta.BL.Puesto.Puesto;
-import com.punto_venta.BL.Usuario.Usuario;
+import com.punto_venta.BL.Puestos.Puesto;
+import com.punto_venta.BL.Usuarios.Usuario;
 import java.time.LocalDate;
 import java.util.Objects;
 
@@ -15,7 +15,7 @@ import java.util.Objects;
  * @author krisa
  */
 public class Empleado extends Usuario {
-    private Puesto v_puesto;
+    private String v_puesto;
     private int v_salbase;
     private double v_bonus;
     private int  v_netsal;
@@ -24,9 +24,8 @@ public class Empleado extends Usuario {
     public Empleado() {
      
     }
-
-    public Empleado(Puesto v_puesto, int v_salbase, double v_bonus, int v_netsal, LocalDate v_inicia, String v_key_type, int v_ID, String v_correo, String v_pass, String v_usuario, String[] v_nombre, LocalDate v_fechanac, String genero, int v_telefono) {
-        super(v_key_type, v_ID, v_correo, v_pass, v_usuario, v_nombre, v_fechanac, genero, v_telefono);
+    public Empleado(String v_puesto, int v_salbase, double v_bonus, int v_netsal, LocalDate v_inicia, int v_rol, int v_ID, String v_correo, String v_pass, String v_usuario, String v_nombre, LocalDate v_fechanac, String genero, String v_telefono) {
+        super(v_rol, v_ID, v_correo, v_pass, v_usuario, v_nombre, v_fechanac, genero, v_telefono);
         this.v_puesto = v_puesto;
         this.v_salbase = v_salbase;
         this.v_bonus = v_bonus;
@@ -34,13 +33,15 @@ public class Empleado extends Usuario {
         this.v_inicia = v_inicia;
     }
 
+    
+
   
 
-    public Puesto  getV_puesto() {
+    public String   getV_puesto() {
         return v_puesto;
     }
 
-    public void setV_puesto(Puesto v_puesto) {
+    public void setV_puesto(String v_puesto) {
         this.v_puesto = v_puesto;
     }
 

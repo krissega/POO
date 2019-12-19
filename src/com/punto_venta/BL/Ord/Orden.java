@@ -3,10 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.punto_venta.BL.Orden;
-
-import com.punto_venta.BL.Producto.Producto;
-import com.punto_venta.BL.Producto.Combo;
+package com.punto_venta.BL.Ord;
+import com.punto_venta.BL.Prod.Platillo;
+import com.punto_venta.BL.Prod.PlatilloXCombo;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Objects;
@@ -20,11 +19,11 @@ public class Orden {
     private String v_tipo;
     private String v_nombrec;
     private LocalDateTime v_fecha;
-    private ArrayList<Combo> v_combos;
-    private ArrayList<Producto> v_prods;
+    private ArrayList<PlatilloXCombo> v_combos;
+    private ArrayList<Platillo> v_prods;
     private double v_total;
 
-    public Orden(String v_tipo, String v_nombrec, LocalDateTime v_fecha, ArrayList<Combo> v_combos, ArrayList<Producto> v_prods, double v_total) {
+    public Orden(String v_tipo, String v_nombrec, LocalDateTime v_fecha, ArrayList<PlatilloXCombo> v_combos, ArrayList<Platillo> v_prods, double v_total) {
         this.v_tipo = v_tipo;
         this.v_nombrec = v_nombrec;
         this.v_fecha = v_fecha;
@@ -77,19 +76,19 @@ public class Orden {
         this.v_fecha = v_fecha;
     }
 
-    public ArrayList<Combo> getV_combos() {
+    public ArrayList<PlatilloXCombo> getV_combos() {
         return v_combos;
     }
 
-    public void setV_combos(ArrayList<Combo> v_combos) {
+    public void setV_combos(ArrayList<PlatilloXCombo> v_combos) {
         this.v_combos = v_combos;
     }
 
-    public ArrayList<Producto> getV_prods() {
+    public ArrayList<Platillo> getV_prods() {
         return v_prods;
     }
 
-    public void setV_prods(ArrayList<Producto> v_prods) {
+    public void setV_prods(ArrayList<Platillo> v_prods) {
         this.v_prods = v_prods;
     }
 

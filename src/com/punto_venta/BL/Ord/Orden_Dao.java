@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.punto_venta.BL.Orden;
+package com.punto_venta.BL.Ord;
 
 import java.util.ArrayList;
 

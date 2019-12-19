@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.punto_venta.BL.Producto;
+package com.punto_venta.BL.Prod;
 
 import java.util.Objects;
 
@@ -11,17 +11,21 @@ import java.util.Objects;
  *
  * @author krisa
  */
-public class Producto {
+public class Platillo {
     private int v_ID; 
     private String v_nombre;
     private String v_descripcion;
     private double v_precio;
 
-    public Producto(int v_ID, String v_nombre, String v_descripcion, double v_precio) {
+    public Platillo(int v_ID, String v_nombre, String v_descripcion, double v_precio) {
         this.v_ID = v_ID;
         this.v_nombre = v_nombre;
         this.v_descripcion = v_descripcion;
         this.v_precio = v_precio;
+    }
+
+    Platillo() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     public int getV_ID() {
@@ -73,7 +77,7 @@ public class Producto {
         if (getClass() != obj.getClass()) {
             return false;
         }
-        final Producto other = (Producto) obj;
+        final Platillo other = (Platillo) obj;
         if (this.v_ID != other.v_ID) {
             return false;
         }

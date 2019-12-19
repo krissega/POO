@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.punto_venta.BL.Usuario;
+package com.punto_venta.BL.Usuarios;
 
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
@@ -18,23 +18,23 @@ import java.util.Objects;
  * @author krisa
  */
 public class Usuario {
-    private String v_key_type;
+    private int v_rol;
     private int v_ID;
     private String v_correo;
     private String v_pass;
     private String v_usuario;
-    private String [] v_nombre = new String[3]; //como pide los nombres separados de sus apellidos se hace con un arreglo de string para cada uno 
+    private String v_nombre; 
     private LocalDate v_fechanac;
     private int v_edad;
     private String genero;
-    private int v_telefono;
+    private String  v_telefono;
     private String identificacion;
 
     public Usuario() {
     }
 
-    public Usuario(String v_key_type,int v_ID, String v_correo, String v_pass, String v_usuario, String[] v_nombre, LocalDate v_fechanac, String genero, int v_telefono) {
-        this.v_key_type = v_key_type;
+    public Usuario(int v_rol,int v_ID, String v_correo, String v_pass, String v_usuario, String v_nombre, LocalDate v_fechanac, String genero, String v_telefono) {
+        this.v_rol = v_rol;
         this.v_ID = v_ID;
         this.v_correo = v_correo;
         this.v_pass = v_pass;
@@ -55,8 +55,8 @@ public class Usuario {
 
 
 
-    public String getV_key_type() {
-        return v_key_type;
+    public int getV_key_type() {
+        return v_rol;
     }
 
     public void setV_key_type(String v_key_type) {
@@ -97,11 +97,11 @@ public class Usuario {
         this.v_usuario = v_usuario;
     }
 
-    public String[] getV_nombre() {
+    public String getV_nombre() {
         return v_nombre;
     }
 
-    public void setV_nombre(String[] v_nombre) {
+    public void setV_nombre(String v_nombre) {
         this.v_nombre = v_nombre;
     }
 
@@ -129,11 +129,11 @@ public class Usuario {
         this.genero = genero;
     }
 
-    public int getV_telefono() {
+    public String  getV_telefono() {
         return v_telefono;
     }
 
-    public void setV_telefono(int v_telefono) {
+    public void setV_telefono(String v_telefono) {
         this.v_telefono = v_telefono;
     }
     
@@ -148,17 +148,17 @@ public class Usuario {
     @Override
     public int hashCode() {
         int hash = 7;
-        hash = 89 * hash + Objects.hashCode(this.v_key_type);
-        hash = 89 * hash + this.v_ID;
-        hash = 89 * hash + Objects.hashCode(this.v_correo);
-        hash = 89 * hash + Objects.hashCode(this.v_pass);
-        hash = 89 * hash + Objects.hashCode(this.v_usuario);
-        hash = 89 * hash + Arrays.deepHashCode(this.v_nombre);
-        hash = 89 * hash + Objects.hashCode(this.v_fechanac);
-        hash = 89 * hash + this.v_edad;
-        hash = 89 * hash + Objects.hashCode(this.genero);
-        hash = 89 * hash + this.v_telefono;
-        hash = 89 * hash + Objects.hashCode(this.identificacion);
+        hash = 41 * hash + Objects.hashCode(this.v_rol);
+        hash = 41 * hash + this.v_ID;
+        hash = 41 * hash + Objects.hashCode(this.v_correo);
+        hash = 41 * hash + Objects.hashCode(this.v_pass);
+        hash = 41 * hash + Objects.hashCode(this.v_usuario);
+        hash = 41 * hash + Objects.hashCode(this.v_nombre);
+        hash = 41 * hash + Objects.hashCode(this.v_fechanac);
+        hash = 41 * hash + this.v_edad;
+        hash = 41 * hash + Objects.hashCode(this.genero);
+        hash = 41 * hash + Objects.hashCode(this.v_telefono);
+        hash = 41 * hash + Objects.hashCode(this.identificacion);
         return hash;
     }
 
@@ -180,12 +180,6 @@ public class Usuario {
         if (this.v_edad != other.v_edad) {
             return false;
         }
-        if (this.v_telefono != other.v_telefono) {
-            return false;
-        }
-        if (!Objects.equals(this.v_key_type, other.v_key_type)) {
-            return false;
-        }
         if (!Objects.equals(this.v_correo, other.v_correo)) {
             return false;
         }
@@ -195,13 +189,16 @@ public class Usuario {
         if (!Objects.equals(this.v_usuario, other.v_usuario)) {
             return false;
         }
+        if (!Objects.equals(this.v_nombre, other.v_nombre)) {
+            return false;
+        }
         if (!Objects.equals(this.genero, other.genero)) {
             return false;
         }
-        if (!Objects.equals(this.identificacion, other.identificacion)) {
+        if (!Objects.equals(this.v_telefono, other.v_telefono)) {
             return false;
         }
-        if (!Arrays.deepEquals(this.v_nombre, other.v_nombre)) {
+        if (!Objects.equals(this.identificacion, other.identificacion)) {
             return false;
         }
         if (!Objects.equals(this.v_fechanac, other.v_fechanac)) {
@@ -210,9 +207,14 @@ public class Usuario {
         return true;
     }
 
+ 
+
+ 
+
+
     @Override
     public String toString() {
-        return "Usuario{Tipo de Usuario "+ v_key_type+ "ID =" + v_ID + ", correo =" + v_correo + ", pass =" + v_pass + ", Nombre de usuario=" + v_usuario + ", nombre completo =" + v_nombre + ", fecha de nacimiento =" + v_fechanac + ", edad = " + v_edad + ", genero = " + genero + ", telefono = " + v_telefono + ", identificacion = " + identificacion + '}';
+        return "Usuario{Tipo de Usuario "+ v_rol+ "ID =" + v_ID + ", correo =" + v_correo + ", pass =" + v_pass + ", Nombre de usuario=" + v_usuario + ", nombre completo =" + v_nombre + ", fecha de nacimiento =" + v_fechanac + ", edad = " + v_edad + ", genero = " + genero + ", telefono = " + v_telefono + ", identificacion = " + identificacion + '}';
     }
     
 
