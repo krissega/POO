@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.punto_venta.BL.Puestos;
+package com.tupuntodeventa.BL.Puestos;
 
 import java.util.ArrayList;
 

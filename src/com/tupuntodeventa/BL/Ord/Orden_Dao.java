@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.punto_venta.BL.Ord;
+package com.tupuntodeventa.BL.Ord;
 
 import com.punto_venta.BL.DAO.DAO;
 import com.punto_venta.BL.Prod.Platillo;

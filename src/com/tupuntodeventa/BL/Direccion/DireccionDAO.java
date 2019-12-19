@@ -3,14 +3,14 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.punto_venta.Direccion;
+package com.tupuntodeventa.BL.Direccion;
 
 /**
  *
  * @author krisa
  */
-import com.punto_venta.BL.DAO.DAO;
-import com.punto_venta.BL.Usuarios.UsuarioDAO;
+import com.tupuntodeventa.BL.DAO.DAO;
+import com.tupuntodeventa.BL.Usuarios.UsuarioDAO;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;

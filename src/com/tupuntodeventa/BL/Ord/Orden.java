@@ -3,9 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.punto_venta.BL.Ord;
-import com.punto_venta.BL.Prod.Platillo;
-import com.punto_venta.BL.Prod.PlatilloXCombo;
+package com.tupuntodeventa.BL.Ord;
+import com.tupuntodeventa.BL.Prod.Platillo;
+import com.tupuntodeventa.BL.Prod.PlatilloXCombo;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Objects;

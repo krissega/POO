@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.punto_venta.Direccion;
+package com.tupuntodeventa.BL.Direccion;
 
 import java.util.Objects;
 
