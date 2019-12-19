@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.punto_venta.BL.Puestos;
+package com.tupuntodeventa.BL.Ord;
 
 import java.util.ArrayList;
 
@@ -11,12 +11,13 @@ import java.util.ArrayList;
  *
  * @author krisa
  */
-public interface Puesto_Dao {
-    public String add() throws Exception;
-    public ArrayList<Puesto> get() throws Exception;
+public interface Orden_Dao {
+    
+   public String add() throws Exception;
+    public ArrayList<Orden> get() throws Exception;
     public boolean exists() throws Exception;
-    public Puesto getById(int id) throws Exception;
-    public String deleteById(int id)throws Exception;    
+    public Orden getById(int id) throws Exception;
+    public String deleteById(int id)throws Exception;
 
 
 

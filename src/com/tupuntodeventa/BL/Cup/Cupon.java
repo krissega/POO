@@ -1,4 +1,4 @@
-package com.punto_venta.BL.Cup;
+package com.tupuntodeventa.BL.Cup;
 
 import java.time.LocalDate;
 import java.util.Objects;

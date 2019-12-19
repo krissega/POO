@@ -3,10 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.punto_venta.BL.Cup;
-import com.punto_venta.BL.DAO.DAO;
-import com.punto_venta.BL.Prod.Platillo;
-import com.punto_venta.BL.Prod.PlatilloDao;
+package com.tupuntodeventa.BL.Cup;
+import com.tupuntodeventa.BL.DAO.DAO;
+import com.tupuntodeventa.BL.Prod.PlatilloDao;
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.DriverManager;
