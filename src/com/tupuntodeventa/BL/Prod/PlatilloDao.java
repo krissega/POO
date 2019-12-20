@@ -26,10 +26,7 @@ public class PlatilloDao extends DAO {
     private final String BUSCAR_TODOS = "SELECT * FROM Platillos";
     private final String BUSCAR_PLATILLOS = "SELECT * FROM Platillos WHERE Id IN "; // VA A RECIBIR VARIOS IDS DE PLATILLOS
     private final String BUSCAR_COMBO = "SELECT *  FROM Combos WHERE ID_COMBO = ?";
-    private final String REGISTRAR_PLATILLO = "INSERT INTO Platillos () VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-    private final String REGISTRAR_COMBO="INSERT INTO PlatillosXCombo VALUES(??,?,?,?)";
-    
-    
+    private final String REGISTRAR_PLATILLO = "INSERT INTO Platillos (nombre, Precio, Descripcion) VALUES (?, ?, ?)";
     
     //BUSCA TODOS LOS PLATILLOS DE LA TABLA Y LOS DEVUELVE EN UNA LISTA
     

@@ -12,6 +12,7 @@ import com.tupuntodeventa.BL.Prod.Platillo;
 import com.tupuntodeventa.BL.Prod.PlatilloDao;
 import com.tupuntodeventa.BL.Usuarios.UsuarioDAO;
 
+import java.math.BigDecimal;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -42,7 +43,7 @@ public class Orden_Dao extends DAO {
             while (rs.next()) {
                 Orden v_orden = new Orden();
                 v_orden.setV_fecha(rs.getTimestamp("Fecha").toLocalDateTime());
-                v_orden.setV_nombrec(usuarioDAO.getUsuario(rs.getInt("IdCliente")).getV_nombre());
+                v_orden.setV_clienteId(usuarioDAO.getUsuario(rs.getInt("IdCliente")).getV_ID());
                 v_orden.setV_tipo(rs.getInt("TipoOrden") == 1 ? "Platillos" : "Combo");
                 v_orden.setV_total(rs.getDouble("Precio"));
 
@@ -126,8 +127,11 @@ public class Orden_Dao extends DAO {
         int i = 0;
 
         PreparedStatement ps = conn.prepareStatement(REGISTRAR_ORDEN);
-        ps.setString(i++, v_orden.getV_nombrec());
-
+        ps.setInt(i++, v_orden.getV_usuarioId());
+        ps.setInt(i++, v_orden.getV_clienteId());
+        ps.setInt(i++, Integer.parseInt(v_orden.getV_tipo()));
+        ps.setTimestamp(i++, Timestamp.valueOf(v_orden.getV_fecha()));
+        ps.setBigDecimal(i, BigDecimal.valueOf(v_orden.getV_total()));
 
         return ps;
     }
