@@ -24,6 +24,7 @@ import java.util.logging.Logger;
  */
 public class PlatilloDao extends DAO {
     private final String BUSCAR_TODOS = "SELECT * FROM Platillos";
+    private final String BUSCAR_PLATILLOS = "SELECT * FROM Platillos WHERE Id IN "; // VA A RECIBIR VARIOS IDS DE PLATILLOS
     private final String BUSCAR_COMBO = "SELECT *  FROM Combos WHERE ID_COMBO = ?";
     private final String REGISTRAR_PLATILLO = "INSERT INTO Platillos () VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
     private final String REGISTRAR_COMBO="INSERT INTO PlatillosXCombo VALUES(??,?,?,?)";
@@ -57,8 +58,35 @@ public class PlatilloDao extends DAO {
     private PreparedStatement buscarTodosPs(Connection conn) throws SQLException {
         return conn.prepareStatement(BUSCAR_TODOS);
     }
-    
-  
+
+    public ArrayList<Platillo> buscarPlatillos(Connection conn, ArrayList<Integer> idsPlatillos) {
+        ArrayList<Platillo> platillos = new ArrayList<>();
+        try (PreparedStatement ps = buscarPlatillosPs(conn, idsPlatillos);
+                ResultSet rs = ps.executeQuery()) {
+            while (rs.next()) {
+                Platillo platillo = new Platillo();
+                platillo.setV_ID(rs.getInt("Id"));
+                platillo.setV_precio(rs.getDouble("Precio"));
+                platillo.setV_descripcion(rs.getString("Descripcion"));
+                platillo.setV_nombre("Nombre");
+
+                platillos.add(platillo);
+            }
+        } catch (SQLException e) {
+
+        }
+
+        return platillos;
+    }
+
+    private PreparedStatement buscarPlatillosPs(Connection conn, ArrayList<Integer> idsPlatillos) throws SQLException{
+        PreparedStatement ps = conn.prepareStatement(BUSCAR_PLATILLOS + inSQLPlaceholders(idsPlatillos.size()));
+        for (int i = 1; i <= idsPlatillos.size(); i++) {
+            ps.setInt(i, idsPlatillos.get(i - 1));
+        }
+        return ps;
+    }
+
     public boolean registrarPlatillo(Platillo v_nuevop) {
         try (Connection conn = DriverManager.getConnection(url, user, pass);
              PreparedStatement ps = registrarPlatilloPs(conn, v_nuevop)) {

@@ -30,6 +30,7 @@ public class UsuarioDAO extends DAO {
     
     private final String BUSCAR_TODOS = "SELECT * FROM usuarios";
     private final String LOGIN = "SELECT Id FROM usuarios WHERE NombreUsuario = ? AND Clave = ?";
+    private final String USUARIO_ID = "SELECT ";
     private final String VERIFICAR_ADMIN = "SELECT Id FROM usuarios WHERE Rol = 1";
     private final String VERIFICAR_IDENTIFICACION = "SELECT Id from usuarios WHERE Identificacion = ?";
     private final String REGISTRAR_USUARIO = "INSERT INTO usuarios (NombreUsuario, Clave, Correo, NombrePila, " +
@@ -168,6 +169,28 @@ public class UsuarioDAO extends DAO {
             ps.setNull(i, Types.DATE);
         }
 
+        return ps;
+    }
+
+    public Usuario getUsuario(int id) {
+        Usuario usuario = null;
+        try (Connection conn = DriverManager.getConnection(url, user, pass);
+             PreparedStatement ps = getUsuarioPs(conn, id);
+            ResultSet rs = ps.executeQuery()) {
+            while (rs.next()) {
+                usuario = new Usuario();
+                usuario.setV_ID(id);
+                usuario.setGenero(rs.getString("Genero"));
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(UsuarioDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return usuario;
+    }
+
+    private PreparedStatement getUsuarioPs(Connection conn, int id) throws SQLException {
+        PreparedStatement ps = conn.prepareStatement(USUARIO_ID);
+        ps.setInt(1, id);
         return ps;
     }
 }

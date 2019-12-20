@@ -4,8 +4,10 @@
  * and open the template in the editor.
  */
 package com.tupuntodeventa.BL.Ord;
+
+import com.tupuntodeventa.BL.Prod.Combo;
 import com.tupuntodeventa.BL.Prod.Platillo;
-import com.tupuntodeventa.BL.Prod.PlatilloXCombo;
+
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Objects;
@@ -19,11 +21,11 @@ public class Orden {
     private String v_tipo;
     private String v_nombrec;
     private LocalDateTime v_fecha;
-    private ArrayList<PlatilloXCombo> v_combos;
+    private ArrayList<Combo> v_combos;
     private ArrayList<Platillo> v_prods;
     private double v_total;
 
-    public Orden(String v_tipo, String v_nombrec, LocalDateTime v_fecha, ArrayList<PlatilloXCombo> v_combos, ArrayList<Platillo> v_prods, double v_total) {
+    public Orden(String v_tipo, String v_nombrec, LocalDateTime v_fecha, ArrayList<Combo> v_combos, ArrayList<Platillo> v_prods, double v_total) {
         this.v_tipo = v_tipo;
         this.v_nombrec = v_nombrec;
         this.v_fecha = v_fecha;
@@ -34,7 +36,7 @@ public class Orden {
 
     public Orden() {
     }
-
+/*
     public double price_calculator() {
         double v_acumulator = 0;
         if (v_prods.size() < 1) {
@@ -51,6 +53,8 @@ public class Orden {
         }
         return v_acumulator;
     }
+
+ */
 
     public String getV_tipo() {
         return v_tipo;
@@ -76,11 +80,11 @@ public class Orden {
         this.v_fecha = v_fecha;
     }
 
-    public ArrayList<PlatilloXCombo> getV_combos() {
+    public ArrayList<Combo> getV_combos() {
         return v_combos;
     }
 
-    public void setV_combos(ArrayList<PlatilloXCombo> v_combos) {
+    public void setV_combos(ArrayList<Combo> v_combos) {
         this.v_combos = v_combos;
     }
 
