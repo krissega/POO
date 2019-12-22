@@ -22,8 +22,10 @@ public class Empleado extends Usuario {
     public Empleado() {
      
     }
-    public Empleado(String v_puesto, int v_salbase, double v_bonus, int v_netsal, LocalDate v_inicia, int v_rol, int v_ID, String v_correo, String v_pass, String v_usuario, String v_nombre, LocalDate v_fechanac, String genero, String v_telefono) {
-        super(v_rol, v_ID, v_correo, v_pass, v_usuario, v_nombre, v_fechanac, genero, v_telefono);
+    public Empleado(String v_puesto, int v_salbase, double v_bonus, int v_netsal, LocalDate v_inicia, int v_rol,
+                    int v_ID, String v_correo, String v_pass, String v_usuario, String v_nombre, String v_apellido, String v_segundo_apellido,
+                    LocalDate v_fechanac, String genero, String v_telefono) {
+        super(v_rol, v_ID, v_correo, v_pass, v_usuario, v_nombre, v_apellido, v_segundo_apellido, v_fechanac, genero, v_telefono);
         this.v_puesto = v_puesto;
         this.v_salbase = v_salbase;
         this.v_bonus = v_bonus;

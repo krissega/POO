@@ -124,7 +124,7 @@ public class Orden_Dao extends DAO {
     }
 
     public PreparedStatement registrarOrdenPs(Connection conn, Orden v_orden) throws SQLException {
-        int i = 0;
+        int i = 1;
 
         PreparedStatement ps = conn.prepareStatement(REGISTRAR_ORDEN);
         ps.setInt(i++, v_orden.getV_usuarioId());

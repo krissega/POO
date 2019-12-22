@@ -35,7 +35,7 @@ public class DireccionDAO extends DAO {
     }
 
     private PreparedStatement insertarDireccionPs(Connection conn, int usuarioId, Direccion direccion) throws SQLException {
-        int i = 0;
+        int i = 1;
         PreparedStatement ps = conn.prepareStatement(INSERTAR_DIRECCION);
         ps.setString(i++, direccion.getDireccionExacta());
         ps.setString(i++, direccion.getCanton());

@@ -8,15 +8,9 @@ package com.tupuntodeventa.BL.Usuarios;
 import com.tupuntodeventa.BL.DAO.DAO;
 import com.tupuntodeventa.BL.Direccion.Direccion;
 import com.tupuntodeventa.BL.Direccion.DireccionDAO;
+
 import java.math.BigDecimal;
-import java.sql.Connection;
-import java.sql.Date;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
-import java.sql.Types;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -30,13 +24,17 @@ public class UsuarioDAO extends DAO {
     
     private final String BUSCAR_TODOS = "SELECT * FROM usuarios";
     private final String LOGIN = "SELECT Id FROM usuarios WHERE NombreUsuario = ? AND Clave = ?";
-    private final String USUARIO_ID = "SELECT ";
-    private final String VERIFICAR_ADMIN = "SELECT Id FROM usuarios WHERE Rol = 1";
+    private final String USUARIO_ID = "SELECT * FROM usuarios WHERE Id = ?";
+    private final String VERIFICAR_ADMIN = "SELECT Id FROM usuarios WHERE Rol = 0";
     private final String VERIFICAR_IDENTIFICACION = "SELECT Id from usuarios WHERE Identificacion = ?";
     private final String REGISTRAR_USUARIO = "INSERT INTO usuarios (NombreUsuario, Clave, Correo, NombrePila, " +
             "Apellido, SegundoApellido, FechaNac, Genero, Identificacion, Telefono, Rol, NombrePuesto, SalarioBase, " +
             "Bonificacion, SalarioNeto, FechaContrato) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-    
+
+    public UsuarioDAO() {
+        super();
+    }
+
     public List<Usuario> buscarTodos() {
         List<Usuario> usuarios = new ArrayList<>();
         
@@ -52,7 +50,7 @@ public class UsuarioDAO extends DAO {
                 usuario.setIdentificacion(rs.getString("Identificacion"));
                 usuario.setV_fechanac(rs.getDate("FechaNac").toLocalDate());
                 usuario.setV_edad(Usuario.age_calculator(usuario.getV_fechanac()));
-                usuario.setV_nombre(rs.getString("nombre"));
+                usuario.setV_nombre_pila(rs.getString("nombre"));
                 
                 usuarios.add(usuario);
             }
@@ -143,11 +141,14 @@ public class UsuarioDAO extends DAO {
     }
 
     public PreparedStatement registrarUsuarioPs(Connection conn, Usuario nuevoUsuario) throws SQLException {
-        int i = 0;
-        PreparedStatement ps = conn.prepareStatement(REGISTRAR_USUARIO, Statement.RETURN_GENERATED_KEYS);
+        int i = 1;
+        PreparedStatement ps = conn.prepareStatement(REGISTRAR_USUARIO);
         ps.setString(i++, nuevoUsuario.getV_usuario());
         ps.setString(i++, nuevoUsuario.getV_pass());
-        ps.setString(i++, nuevoUsuario.getV_nombre());
+        ps.setString(i++, nuevoUsuario.getV_correo());
+        ps.setString(i++, nuevoUsuario.getV_nombre_pila());
+        ps.setString(i++, nuevoUsuario.getV_apellido());
+        ps.setString(i++, nuevoUsuario.getV_segundo_apellido());
         ps.setDate(i++, Date.valueOf(nuevoUsuario.getV_fechanac()));
         ps.setString(i++, nuevoUsuario.getGenero());
         ps.setString(i++, nuevoUsuario.getIdentificacion());
