@@ -10,10 +10,7 @@ import java.time.temporal.ChronoUnit;
 import java.util.Objects;
 
 
-
-
 /**
- *
  * @author krisa
  */
 public class Usuario {
@@ -22,37 +19,45 @@ public class Usuario {
     private String v_correo;
     private String v_pass;
     private String v_usuario;
-    private String v_nombre; 
+    private String v_nombre_pila;
+    private String v_apellido;
+    private String v_segundo_apellido;
     private LocalDate v_fechanac;
     private int v_edad;
     private String genero;
-    private String  v_telefono;
+    private String v_telefono;
     private String identificacion;
 
     public Usuario() {
     }
 
-    public Usuario(int v_rol,int v_ID, String v_correo, String v_pass, String v_usuario, String v_nombre, LocalDate v_fechanac, String genero, String v_telefono) {
+    public Usuario(int v_rol, int v_ID, String v_correo, String v_pass, String v_usuario, String v_nombre_pila, String v_apellido, String v_segundo_apellido,
+                   LocalDate v_fechanac, String genero, String v_telefono) {
         this.v_rol = v_rol;
         this.v_ID = v_ID;
         this.v_correo = v_correo;
         this.v_pass = v_pass;
         this.v_usuario = v_usuario;
-        this.v_nombre = v_nombre;
+        this.v_nombre_pila = v_nombre_pila;
+        this.v_apellido = v_apellido;
+        this.v_segundo_apellido = v_segundo_apellido;
         this.v_fechanac = v_fechanac;
         this.v_edad = age_calculator(v_fechanac);
         this.genero = genero;
         this.v_telefono = v_telefono;
     }
-    
-    
-    public static int age_calculator(LocalDate v_fechanac){
-    LocalDate v_today= LocalDate.now();                        
-    long v_years= ChronoUnit.YEARS.between(v_fechanac,v_today);
-    return  Math.toIntExact(v_years);
+
+
+    public static int age_calculator(LocalDate v_fechanac) {
+        LocalDate v_today = LocalDate.now();
+        long v_years = ChronoUnit.YEARS.between(v_fechanac, v_today);
+        return Math.toIntExact(v_years);
     }
 
-
+    public static Usuario autenticar(String nombreUsuario, String clave) {
+        UsuarioDAO usuarioDAO = new UsuarioDAO();
+        return usuarioDAO.autenticar(nombreUsuario, clave);
+    }
 
     public int getV_key_type() {
         return v_rol;
@@ -61,7 +66,6 @@ public class Usuario {
     public void setV_key_type(String v_key_type) {
         this.v_correo = v_key_type;
     }
-
 
 
     public int getV_ID() {
@@ -96,12 +100,12 @@ public class Usuario {
         this.v_usuario = v_usuario;
     }
 
-    public String getV_nombre() {
-        return v_nombre;
+    public String getV_nombre_pila() {
+        return v_nombre_pila;
     }
 
-    public void setV_nombre(String v_nombre) {
-        this.v_nombre = v_nombre;
+    public void setV_nombre_pila(String v_nombre_pila) {
+        this.v_nombre_pila = v_nombre_pila;
     }
 
     public LocalDate getV_fechanac() {
@@ -128,101 +132,75 @@ public class Usuario {
         this.genero = genero;
     }
 
-    public String  getV_telefono() {
+    public String getV_telefono() {
         return v_telefono;
     }
 
     public void setV_telefono(String v_telefono) {
         this.v_telefono = v_telefono;
     }
-    
+
     public String getIdentificacion() {
         return identificacion;
     }
-    
+
     public void setIdentificacion(String identificacion) {
         this.identificacion = identificacion;
     }
 
+    public int getV_rol() {
+        return v_rol;
+    }
+
+    public void setV_rol(int v_rol) {
+        this.v_rol = v_rol;
+    }
+
+    public String getV_apellido() {
+        return v_apellido;
+    }
+
+    public void setV_apellido(String v_apellido) {
+        this.v_apellido = v_apellido;
+    }
+
+    public String getV_segundo_apellido() {
+        return v_segundo_apellido;
+    }
+
+    public void setV_segundo_apellido(String v_segundo_apellido) {
+        this.v_segundo_apellido = v_segundo_apellido;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Usuario usuario = (Usuario) o;
+        return v_rol == usuario.v_rol &&
+                v_ID == usuario.v_ID &&
+                v_edad == usuario.v_edad &&
+                Objects.equals(v_correo, usuario.v_correo) &&
+                Objects.equals(v_pass, usuario.v_pass) &&
+                Objects.equals(v_usuario, usuario.v_usuario) &&
+                Objects.equals(v_nombre_pila, usuario.v_nombre_pila) &&
+                Objects.equals(v_apellido, usuario.v_apellido) &&
+                Objects.equals(v_segundo_apellido, usuario.v_segundo_apellido) &&
+                Objects.equals(v_fechanac, usuario.v_fechanac) &&
+                Objects.equals(genero, usuario.genero) &&
+                Objects.equals(v_telefono, usuario.v_telefono) &&
+                Objects.equals(identificacion, usuario.identificacion);
+    }
+
     @Override
     public int hashCode() {
-        int hash = 7;
-        hash = 41 * hash + Objects.hashCode(this.v_rol);
-        hash = 41 * hash + this.v_ID;
-        hash = 41 * hash + Objects.hashCode(this.v_correo);
-        hash = 41 * hash + Objects.hashCode(this.v_pass);
-        hash = 41 * hash + Objects.hashCode(this.v_usuario);
-        hash = 41 * hash + Objects.hashCode(this.v_nombre);
-        hash = 41 * hash + Objects.hashCode(this.v_fechanac);
-        hash = 41 * hash + this.v_edad;
-        hash = 41 * hash + Objects.hashCode(this.genero);
-        hash = 41 * hash + Objects.hashCode(this.v_telefono);
-        hash = 41 * hash + Objects.hashCode(this.identificacion);
-        return hash;
+        return Objects.hash(v_rol, v_ID, v_correo, v_pass, v_usuario, v_nombre_pila, v_apellido, v_segundo_apellido, v_fechanac, v_edad, genero, v_telefono, identificacion);
     }
-
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj) {
-            return true;
-        }
-        if (obj == null) {
-            return false;
-        }
-        if (getClass() != obj.getClass()) {
-            return false;
-        }
-        final Usuario other = (Usuario) obj;
-        if (this.v_ID != other.v_ID) {
-            return false;
-        }
-        if (this.v_edad != other.v_edad) {
-            return false;
-        }
-        if (!Objects.equals(this.v_correo, other.v_correo)) {
-            return false;
-        }
-        if (!Objects.equals(this.v_pass, other.v_pass)) {
-            return false;
-        }
-        if (!Objects.equals(this.v_usuario, other.v_usuario)) {
-            return false;
-        }
-        if (!Objects.equals(this.v_nombre, other.v_nombre)) {
-            return false;
-        }
-        if (!Objects.equals(this.genero, other.genero)) {
-            return false;
-        }
-        if (!Objects.equals(this.v_telefono, other.v_telefono)) {
-            return false;
-        }
-        if (!Objects.equals(this.identificacion, other.identificacion)) {
-            return false;
-        }
-        if (!Objects.equals(this.v_fechanac, other.v_fechanac)) {
-            return false;
-        }
-        return true;
-    }
-
- 
-
- 
-
 
     @Override
     public String toString() {
-        return "Usuario{Tipo de Usuario "+ v_rol+ "ID =" + v_ID + ", correo =" + v_correo + ", pass =" + v_pass + ", Nombre de usuario=" + v_usuario + ", nombre completo =" + v_nombre + ", fecha de nacimiento =" + v_fechanac + ", edad = " + v_edad + ", genero = " + genero + ", telefono = " + v_telefono + ", identificacion = " + identificacion + '}';
+        return "Usuario{Tipo de Usuario " + v_rol + "ID =" + v_ID + ", correo =" + v_correo + ", pass =" + v_pass + ", Nombre de usuario=" + v_usuario + ", nombre completo =" + v_nombre_pila + ", fecha de nacimiento =" + v_fechanac + ", edad = " + v_edad + ", genero = " + genero + ", telefono = " + v_telefono + ", identificacion = " + identificacion + '}';
     }
-    
 
-   
-    
-    
-    
-    
-    
-    
-    
+
 }

@@ -4,8 +4,10 @@
  * and open the template in the editor.
  */
 package com.tupuntodeventa.BL.Ord;
+
+import com.tupuntodeventa.BL.Prod.Combo;
 import com.tupuntodeventa.BL.Prod.Platillo;
-import com.tupuntodeventa.BL.Prod.PlatilloXCombo;
+
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Objects;
@@ -17,15 +19,17 @@ import java.util.Objects;
 public class Orden {
 
     private String v_tipo;
-    private String v_nombrec;
+    private int v_usuarioId;
+    private int v_clienteId;
     private LocalDateTime v_fecha;
-    private ArrayList<PlatilloXCombo> v_combos;
+    private ArrayList<Combo> v_combos;
     private ArrayList<Platillo> v_prods;
     private double v_total;
 
-    public Orden(String v_tipo, String v_nombrec, LocalDateTime v_fecha, ArrayList<PlatilloXCombo> v_combos, ArrayList<Platillo> v_prods, double v_total) {
+    public Orden(String v_tipo, int v_usuarioId, int v_clienteId, LocalDateTime v_fecha, ArrayList<Combo> v_combos, ArrayList<Platillo> v_prods, double v_total) {
         this.v_tipo = v_tipo;
-        this.v_nombrec = v_nombrec;
+        this.v_usuarioId = v_usuarioId;
+        this.v_clienteId = v_clienteId;
         this.v_fecha = v_fecha;
         this.v_combos = v_combos;
         this.v_prods = v_prods;
@@ -34,7 +38,7 @@ public class Orden {
 
     public Orden() {
     }
-
+/*
     public double price_calculator() {
         double v_acumulator = 0;
         if (v_prods.size() < 1) {
@@ -52,6 +56,8 @@ public class Orden {
         return v_acumulator;
     }
 
+ */
+
     public String getV_tipo() {
         return v_tipo;
     }
@@ -60,12 +66,20 @@ public class Orden {
         this.v_tipo = v_tipo;
     }
 
-    public String getV_nombrec() {
-        return v_nombrec;
+    public int getV_usuarioId() {
+        return v_usuarioId;
     }
 
-    public void setV_nombrec(String v_nombrec) {
-        this.v_nombrec = v_nombrec;
+    public void setV_usuarioId(int v_usuarioId) {
+        this.v_usuarioId = v_usuarioId;
+    }
+
+    public int getV_clienteId() {
+        return v_clienteId;
+    }
+
+    public void setV_clienteId(int v_clienteId) {
+        this.v_clienteId = v_clienteId;
     }
 
     public LocalDateTime getV_fecha() {
@@ -76,11 +90,11 @@ public class Orden {
         this.v_fecha = v_fecha;
     }
 
-    public ArrayList<PlatilloXCombo> getV_combos() {
+    public ArrayList<Combo> getV_combos() {
         return v_combos;
     }
 
-    public void setV_combos(ArrayList<PlatilloXCombo> v_combos) {
+    public void setV_combos(ArrayList<Combo> v_combos) {
         this.v_combos = v_combos;
     }
 
@@ -101,47 +115,35 @@ public class Orden {
     }
 
     @Override
-    public int hashCode() {
-        int hash = 7;
-        return hash;
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Orden orden = (Orden) o;
+        return v_usuarioId == orden.v_usuarioId &&
+                v_clienteId == orden.v_clienteId &&
+                Double.compare(orden.v_total, v_total) == 0 &&
+                Objects.equals(v_tipo, orden.v_tipo) &&
+                Objects.equals(v_fecha, orden.v_fecha) &&
+                Objects.equals(v_combos, orden.v_combos) &&
+                Objects.equals(v_prods, orden.v_prods);
     }
 
     @Override
-    public boolean equals(Object obj) {
-        if (this == obj) {
-            return true;
-        }
-        if (obj == null) {
-            return false;
-        }
-        if (getClass() != obj.getClass()) {
-            return false;
-        }
-        final Orden other = (Orden) obj;
-        if (Double.doubleToLongBits(this.v_total) != Double.doubleToLongBits(other.v_total)) {
-            return false;
-        }
-        if (!Objects.equals(this.v_tipo, other.v_tipo)) {
-            return false;
-        }
-        if (!Objects.equals(this.v_nombrec, other.v_nombrec)) {
-            return false;
-        }
-        if (!Objects.equals(this.v_fecha, other.v_fecha)) {
-            return false;
-        }
-        if (!Objects.equals(this.v_combos, other.v_combos)) {
-            return false;
-        }
-        if (!Objects.equals(this.v_prods, other.v_prods)) {
-            return false;
-        }
-        return true;
+    public int hashCode() {
+        return Objects.hash(v_tipo, v_usuarioId, v_clienteId, v_fecha, v_combos, v_prods, v_total);
     }
 
     @Override
     public String toString() {
-        return "Orden{" + "v_tipo=" + v_tipo + ", v_nombrec=" + v_nombrec + ", v_fecha=" + v_fecha + ", v_combos=" + v_combos + ", v_prods=" + v_prods + ", v_total=" + v_total + '}';
+        return "Orden{" +
+                "v_tipo='" + v_tipo + '\'' +
+                ", v_usuarioId=" + v_usuarioId +
+                ", v_clienteId=" + v_clienteId +
+                ", v_fecha=" + v_fecha +
+                ", v_combos=" + v_combos +
+                ", v_prods=" + v_prods +
+                ", v_total=" + v_total +
+                '}';
     }
 
 }

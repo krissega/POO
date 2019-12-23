@@ -8,15 +8,9 @@ package com.tupuntodeventa.BL.Usuarios;
 import com.tupuntodeventa.BL.DAO.DAO;
 import com.tupuntodeventa.BL.Direccion.Direccion;
 import com.tupuntodeventa.BL.Direccion.DireccionDAO;
+
 import java.math.BigDecimal;
-import java.sql.Connection;
-import java.sql.Date;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
-import java.sql.Types;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -30,12 +24,17 @@ public class UsuarioDAO extends DAO {
     
     private final String BUSCAR_TODOS = "SELECT * FROM usuarios";
     private final String LOGIN = "SELECT Id FROM usuarios WHERE NombreUsuario = ? AND Clave = ?";
-    private final String VERIFICAR_ADMIN = "SELECT Id FROM usuarios WHERE Rol = 1";
+    private final String USUARIO_ID = "SELECT * FROM usuarios WHERE Id = ?";
+    private final String VERIFICAR_ADMIN = "SELECT Id FROM usuarios WHERE Rol = 0";
     private final String VERIFICAR_IDENTIFICACION = "SELECT Id from usuarios WHERE Identificacion = ?";
     private final String REGISTRAR_USUARIO = "INSERT INTO usuarios (NombreUsuario, Clave, Correo, NombrePila, " +
             "Apellido, SegundoApellido, FechaNac, Genero, Identificacion, Telefono, Rol, NombrePuesto, SalarioBase, " +
             "Bonificacion, SalarioNeto, FechaContrato) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-    
+
+    public UsuarioDAO() {
+        super();
+    }
+
     public List<Usuario> buscarTodos() {
         List<Usuario> usuarios = new ArrayList<>();
         
@@ -51,7 +50,7 @@ public class UsuarioDAO extends DAO {
                 usuario.setIdentificacion(rs.getString("Identificacion"));
                 usuario.setV_fechanac(rs.getDate("FechaNac").toLocalDate());
                 usuario.setV_edad(Usuario.age_calculator(usuario.getV_fechanac()));
-                usuario.setV_nombre(rs.getString("nombre"));
+                usuario.setV_nombre_pila(rs.getString("nombre"));
                 
                 usuarios.add(usuario);
             }
@@ -66,15 +65,67 @@ public class UsuarioDAO extends DAO {
         return conn.prepareStatement(BUSCAR_TODOS);
     }
     
-    public boolean autenticar(String nombreUsuario, String clave) {
+    public Usuario autenticar(String nombreUsuario, String clave) {
         try (Connection conn = DriverManager.getConnection(url, user, pass);
                 PreparedStatement ps = autenticarPs(conn, nombreUsuario, clave);
                 ResultSet rs = ps.executeQuery()) {
-            return rs.next();
+            if (rs.next()) {
+                Usuario usuario = null;
+                switch (rs.getInt("Rol")) {
+                    case 0:
+                        usuario = new Administrador(
+                                0,
+                                rs.getInt("Id"),
+                                rs.getString("Correo"),
+                                null,
+                                rs.getString("NombreUsuario"),
+                                rs.getString("NombrePila"),
+                                rs.getString("Apellido"),
+                                rs.getString("SegundoApellido"),
+                                rs.getDate("FechaNac").toLocalDate(),
+                                rs.getString("Genero"),
+                                rs.getString("Telefono"));
+                        usuario.setIdentificacion(rs.getString("Identificacion"));
+                        usuario.setV_edad(Usuario.age_calculator(usuario.getV_fechanac()));
+                    break;
+                    case 1:
+                        usuario = new Empleado();
+                        usuario.setV_rol(1);
+                        usuario.setV_ID(rs.getInt("Id"));
+                        usuario.setGenero(rs.getString("Genero"));
+                        usuario.setIdentificacion(rs.getString("Identificacion"));
+                        usuario.setV_correo(rs.getString("Correo"));
+                        usuario.setV_fechanac(rs.getDate("FechaNac").toLocalDate());
+                        usuario.setV_edad(Usuario.age_calculator(usuario.getV_fechanac()));
+                        usuario.setV_nombre_pila(rs.getString("NombrePila"));
+                        usuario.setV_usuario(rs.getString("NombreUsuario"));
+                        usuario.setV_apellido(rs.getString("Apellido"));
+                        usuario.setV_segundo_apellido(rs.getString("SegundoApellido"));
+                        usuario.setV_telefono("Telefono");
+                        ((Empleado) usuario).setV_puesto(rs.getString("NombrePuesto"));
+                        ((Empleado) usuario).setV_salbase(rs.getInt("SalarioBase"));
+                        ((Empleado) usuario).setV_bonus(rs.getDouble("Bonificacion"));
+                        ((Empleado) usuario).setV_netsal(rs.getInt("SalarioNeto"));
+                        ((Empleado) usuario).setV_inicia(rs.getDate("FechaContrato").toLocalDate());
+                        break;
+                    case 2:
+                        DireccionDAO direccionDAO = new DireccionDAO();
+                        int idUsuario = rs.getInt("Id");
+                        usuario = new Cliente(direccionDAO.buscarDireccionesUsuario(idUsuario),
+                                2, idUsuario, rs.getString("Correo"),
+                                    null, rs.getString("NombreUsuario"),
+                                rs.getString("NombrePila"), rs.getString("Apellido"),
+                                rs.getString("SegundoApellido"), rs.getDate("FechaNac").toLocalDate(),
+                                rs.getString("Genero"), rs.getString("Telefono"));
+                        usuario.setIdentificacion(rs.getString("Identificacion"));
+                    break;
+                }
+                return usuario;
+            }
         } catch (SQLException ex) {
             Logger.getLogger(UsuarioDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
-        return false;
+        return null;
     }
     
     private PreparedStatement autenticarPs(Connection conn, String nombreUsuario, String clave) throws SQLException {
@@ -142,11 +193,14 @@ public class UsuarioDAO extends DAO {
     }
 
     public PreparedStatement registrarUsuarioPs(Connection conn, Usuario nuevoUsuario) throws SQLException {
-        int i = 0;
-        PreparedStatement ps = conn.prepareStatement(REGISTRAR_USUARIO, Statement.RETURN_GENERATED_KEYS);
+        int i = 1;
+        PreparedStatement ps = conn.prepareStatement(REGISTRAR_USUARIO);
         ps.setString(i++, nuevoUsuario.getV_usuario());
         ps.setString(i++, nuevoUsuario.getV_pass());
-        ps.setString(i++, nuevoUsuario.getV_nombre());
+        ps.setString(i++, nuevoUsuario.getV_correo());
+        ps.setString(i++, nuevoUsuario.getV_nombre_pila());
+        ps.setString(i++, nuevoUsuario.getV_apellido());
+        ps.setString(i++, nuevoUsuario.getV_segundo_apellido());
         ps.setDate(i++, Date.valueOf(nuevoUsuario.getV_fechanac()));
         ps.setString(i++, nuevoUsuario.getGenero());
         ps.setString(i++, nuevoUsuario.getIdentificacion());
@@ -168,6 +222,28 @@ public class UsuarioDAO extends DAO {
             ps.setNull(i, Types.DATE);
         }
 
+        return ps;
+    }
+
+    public Usuario getUsuario(int id) {
+        Usuario usuario = null;
+        try (Connection conn = DriverManager.getConnection(url, user, pass);
+             PreparedStatement ps = getUsuarioPs(conn, id);
+            ResultSet rs = ps.executeQuery()) {
+            while (rs.next()) {
+                usuario = new Usuario();
+                usuario.setV_ID(id);
+                usuario.setGenero(rs.getString("Genero"));
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(UsuarioDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return usuario;
+    }
+
+    private PreparedStatement getUsuarioPs(Connection conn, int id) throws SQLException {
+        PreparedStatement ps = conn.prepareStatement(USUARIO_ID);
+        ps.setInt(1, id);
         return ps;
     }
 }

@@ -5,7 +5,10 @@
  */
 package com.tupuntodeventa.BL.Usuarios;
 
+import com.tupuntodeventa.BL.Direccion.Direccion;
+
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Objects;
 
 /**
@@ -14,47 +17,35 @@ import java.util.Objects;
  */
 public class Cliente extends Usuario {
     
-    String v_direcciones;// como no se cuantas direcciones va a tener le pondre un maximo de 10 
+    private ArrayList<Direccion> v_direcciones;// como no se cuantas direcciones va a tener le pondre un maximo de 10
 
-    public Cliente(String v_direcciones, int v_rol, int v_ID, String v_correo, String v_pass, String v_usuario, String v_nombre, LocalDate v_fechanac, String genero, String v_telefono) {
-        super(v_rol, v_ID, v_correo, v_pass, v_usuario, v_nombre, v_fechanac, genero, v_telefono);
+    public Cliente(ArrayList<Direccion> v_direcciones, int v_rol, int v_ID, String v_correo, String v_pass, String v_usuario,
+                   String v_nombre, String v_apellido, String v_segundo_apellido, LocalDate v_fechanac, String genero, String v_telefono) {
+        super(v_rol, v_ID, v_correo, v_pass, v_usuario, v_nombre, v_apellido, v_segundo_apellido, v_fechanac, genero, v_telefono);
         this.v_direcciones = v_direcciones;
     }
 
-   
-
-    public String getV_direcciones() {
+    public ArrayList<Direccion> getV_direcciones() {
         return v_direcciones;
     }
 
-    public void setV_direcciones(String v_direcciones) {
+    public void setV_direcciones(ArrayList<Direccion> v_direcciones) {
         this.v_direcciones = v_direcciones;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        if (!super.equals(o)) return false;
+        Cliente cliente = (Cliente) o;
+        return Objects.equals(v_direcciones, cliente.v_direcciones);
     }
 
     @Override
     public int hashCode() {
-        int hash = 7;
-        return hash;
+        return Objects.hash(super.hashCode(), v_direcciones);
     }
-
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj) {
-            return true;
-        }
-        if (obj == null) {
-            return false;
-        }
-        if (getClass() != obj.getClass()) {
-            return false;
-        }
-        final Cliente other = (Cliente) obj;
-        if (!Objects.equals(this.v_direcciones, other.v_direcciones)) {
-            return false;
-        }
-        return true;
-    }
-
 
     @Override
     public String toString() {

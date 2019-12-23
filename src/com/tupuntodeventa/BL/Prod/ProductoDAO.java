@@ -22,7 +22,7 @@ import java.util.logging.Logger;
  *
  * @author krisa
  */
-public class PlatilloDao extends DAO {
+public class ProductoDAO extends DAO {
     private final String BUSCAR_TODOS = "SELECT * FROM Platillos";
     private final String BUSCAR_COMBO = "SELECT *  FROM Combos WHERE ID_COMBO = ?";
     private final String REGISTRAR_PLATILLO = "INSERT INTO Platillos () VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
@@ -64,7 +64,7 @@ public class PlatilloDao extends DAO {
              PreparedStatement ps = registrarPlatilloPs(conn, v_nuevop)) {
             return ps.executeUpdate() > 0;
         } catch (SQLException ex) {
-            Logger.getLogger(PlatilloDao.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ProductoDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
         return false;
     }
