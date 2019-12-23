@@ -54,6 +54,10 @@ public class Usuario {
         return Math.toIntExact(v_years);
     }
 
+    public static Usuario autenticar(String nombreUsuario, String clave) {
+        UsuarioDAO usuarioDAO = new UsuarioDAO();
+        return usuarioDAO.autenticar(nombreUsuario, clave);
+    }
 
     public int getV_key_type() {
         return v_rol;

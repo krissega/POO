@@ -65,15 +65,67 @@ public class UsuarioDAO extends DAO {
         return conn.prepareStatement(BUSCAR_TODOS);
     }
     
-    public boolean autenticar(String nombreUsuario, String clave) {
+    public Usuario autenticar(String nombreUsuario, String clave) {
         try (Connection conn = DriverManager.getConnection(url, user, pass);
                 PreparedStatement ps = autenticarPs(conn, nombreUsuario, clave);
                 ResultSet rs = ps.executeQuery()) {
-            return rs.next();
+            if (rs.next()) {
+                Usuario usuario = null;
+                switch (rs.getInt("Rol")) {
+                    case 0:
+                        usuario = new Administrador(
+                                0,
+                                rs.getInt("Id"),
+                                rs.getString("Correo"),
+                                null,
+                                rs.getString("NombreUsuario"),
+                                rs.getString("NombrePila"),
+                                rs.getString("Apellido"),
+                                rs.getString("SegundoApellido"),
+                                rs.getDate("FechaNac").toLocalDate(),
+                                rs.getString("Genero"),
+                                rs.getString("Telefono"));
+                        usuario.setIdentificacion(rs.getString("Identificacion"));
+                        usuario.setV_edad(Usuario.age_calculator(usuario.getV_fechanac()));
+                    break;
+                    case 1:
+                        usuario = new Empleado();
+                        usuario.setV_rol(1);
+                        usuario.setV_ID(rs.getInt("Id"));
+                        usuario.setGenero(rs.getString("Genero"));
+                        usuario.setIdentificacion(rs.getString("Identificacion"));
+                        usuario.setV_correo(rs.getString("Correo"));
+                        usuario.setV_fechanac(rs.getDate("FechaNac").toLocalDate());
+                        usuario.setV_edad(Usuario.age_calculator(usuario.getV_fechanac()));
+                        usuario.setV_nombre_pila(rs.getString("NombrePila"));
+                        usuario.setV_usuario(rs.getString("NombreUsuario"));
+                        usuario.setV_apellido(rs.getString("Apellido"));
+                        usuario.setV_segundo_apellido(rs.getString("SegundoApellido"));
+                        usuario.setV_telefono("Telefono");
+                        ((Empleado) usuario).setV_puesto(rs.getString("NombrePuesto"));
+                        ((Empleado) usuario).setV_salbase(rs.getInt("SalarioBase"));
+                        ((Empleado) usuario).setV_bonus(rs.getDouble("Bonificacion"));
+                        ((Empleado) usuario).setV_netsal(rs.getInt("SalarioNeto"));
+                        ((Empleado) usuario).setV_inicia(rs.getDate("FechaContrato").toLocalDate());
+                        break;
+                    case 2:
+                        DireccionDAO direccionDAO = new DireccionDAO();
+                        int idUsuario = rs.getInt("Id");
+                        usuario = new Cliente(direccionDAO.buscarDireccionesUsuario(idUsuario),
+                                2, idUsuario, rs.getString("Correo"),
+                                    null, rs.getString("NombreUsuario"),
+                                rs.getString("NombrePila"), rs.getString("Apellido"),
+                                rs.getString("SegundoApellido"), rs.getDate("FechaNac").toLocalDate(),
+                                rs.getString("Genero"), rs.getString("Telefono"));
+                        usuario.setIdentificacion(rs.getString("Identificacion"));
+                    break;
+                }
+                return usuario;
+            }
         } catch (SQLException ex) {
             Logger.getLogger(UsuarioDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
-        return false;
+        return null;
     }
     
     private PreparedStatement autenticarPs(Connection conn, String nombreUsuario, String clave) throws SQLException {
