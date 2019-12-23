@@ -47,13 +47,36 @@ public class Main {
         // el usuario obtenido tendra un rol
         // menú por permisos
         int opcion = 0;
-        while (opcion != 6) {
-            System.out.println("Ingrese una opcion de menú:");
-            opcion = scanner.nextInt();
+        int rol = usuario.getV_rol();
 
-            switch (opcion) {
+        switch (rol) {
+            case 0:
+                // menú administrador
+                while (opcion != 7) {
+                    System.out.println("Ingrese una opcion de menú (1-7):");
+                    System.out.println("1. Registrar empleado");
+                    System.out.println("2. Registrar cliente");
+                    System.out.println("3. Listar usuarios");
+                    System.out.println("4. Registrar producto/combo");
+                    System.out.println("5. Listar productos");
+                    System.out.println("6. Generar cupones");
+                    System.out.println("7. Salir");
+                    opcion = scanner.nextInt();
 
-            }
+                    switch (opcion) {
+                        case 1:
+
+                        break;
+                        case 7:
+                            System.out.println("Hasta luego!");
+                        break;
+                        default:
+                            System.out.println("Opción inválida.");
+                    }
+                }
+            break;
+            case 1:
+            break;
         }
     }
 

@@ -5,9 +5,8 @@
  */
 package Controllers.ProductosController;
 
-import com.tupuntodeventa.BL.Prod.Combo;
 import com.tupuntodeventa.BL.Prod.Platillo;
-import com.tupuntodeventa.BL.Prod.ProductoDAO;
+
 import java.util.List;
 
 /**
