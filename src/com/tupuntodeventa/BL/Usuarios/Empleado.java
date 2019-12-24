@@ -33,10 +33,6 @@ public class Empleado extends Usuario {
         this.v_inicia = v_inicia;
     }
 
-    
-
-  
-
     public String   getV_puesto() {
         return v_puesto;
     }

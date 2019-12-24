@@ -5,7 +5,9 @@
  */
 package Controllers.ProductosController;
 
+import com.tupuntodeventa.BL.Prod.ComboDao;
 import com.tupuntodeventa.BL.Prod.Platillo;
+import com.tupuntodeventa.BL.Prod.PlatilloDAO;
 
 import java.util.List;
 
@@ -15,8 +17,8 @@ import java.util.List;
  */
 public class ProductosController {
     
-    ProductoDAO log;
-    
+    PlatilloDAO log;
+    ComboDao cob;    
     public boolean registrarPlatillo(int v_ID, String v_nombre, String v_descripcion, double v_precio){
         Platillo p = new Platillo(v_ID, v_nombre,v_descripcion, v_precio);
         log.registrarPlatillo(p);

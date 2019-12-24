@@ -17,6 +17,24 @@ public class Direccion {
     private int distancia;
     private int usuarioId;
 
+    public Direccion(String direccionExacta, String canton, String distrito, String provincia, int distancia, int usuarioId) {
+        this.id = id;
+        this.direccionExacta = direccionExacta;
+        this.canton = canton;
+        this.distrito = distrito;
+        this.provincia = provincia;
+        this.distancia = distancia;
+        this.usuarioId = usuarioId;
+    }
+
+    Direccion() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+    
+    
+    
+    
+
     public int getId() {
         return id;
     }

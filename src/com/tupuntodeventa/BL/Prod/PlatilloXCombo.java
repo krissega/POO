@@ -4,8 +4,6 @@
  * and open the template in the editor.
  */
 package com.tupuntodeventa.BL.Prod;
-import java.util.ArrayList;
-import java.util.Objects;
 
 /**
  *
@@ -13,53 +11,50 @@ import java.util.Objects;
  */
 public class PlatilloXCombo {
 
-    private ArrayList<Platillo> v_productos;
-    private double v_precio;
-    private String v_nombre;
-
-    public PlatilloXCombo(ArrayList<Platillo> v_productos, String v_descripcion) {
-        this.v_productos = v_productos;
-        this.v_nombre = v_descripcion;
+    private int id;
+    private int platilloId;
+    private int comboId;
+    
+    public PlatilloXCombo(int id, int platilloId, int comboId) {
+        this(platilloId, comboId);
+        this.id = id;
     }
 
-    public double price_calculator() {
-        double v_acumulator = 0;
-        for (int i = 0; i < v_productos.size(); i++) {
-            v_acumulator += v_productos.get(i).getV_precio();
-        }
-        double v_disc = 0.15;//como no dice que cantidad de descuento ni que regla de negocio sigue para registrar los combos cree un desc del 15%
-        double v_temp=v_acumulator * v_disc;
-        double v_prec = v_acumulator - v_temp;
-        return v_prec;
+    public PlatilloXCombo(int platilloId, int comboId) {
+        this.platilloId = platilloId;
+        this.comboId = comboId;
     }
 
-    public ArrayList<Platillo> getV_productos() {
-        return v_productos;
+    public int getId() {
+        return id;
     }
 
-    public void setV_productos(ArrayList<Platillo> v_productos) {
-        this.v_productos = v_productos;
+    public void setId(int id) {
+        this.id = id;
     }
 
-    public double getV_precio() {
-        return v_precio;
+    public int getPlatilloId() {
+        return platilloId;
     }
 
-    public void setV_precio() {
-        this.v_precio = price_calculator();
+    public void setPlatilloId(int platilloId) {
+        this.platilloId = platilloId;
     }
 
-    public String getV_nombre() {
-        return v_nombre;
+    public int getComboId() {
+        return comboId;
     }
 
-    public void setV_nombre(String v_nombre) {
-        this.v_nombre = v_nombre;
+    public void setComboId(int comboId) {
+        this.comboId = comboId;
     }
 
     @Override
     public int hashCode() {
         int hash = 7;
+        hash = 71 * hash + this.id;
+        hash = 71 * hash + this.platilloId;
+        hash = 71 * hash + this.comboId;
         return hash;
     }
 
@@ -75,13 +70,13 @@ public class PlatilloXCombo {
             return false;
         }
         final PlatilloXCombo other = (PlatilloXCombo) obj;
-        if (Double.doubleToLongBits(this.v_precio) != Double.doubleToLongBits(other.v_precio)) {
+        if (this.id != other.id) {
             return false;
         }
-        if (!Objects.equals(this.v_nombre, other.v_nombre)) {
+        if (this.platilloId != other.platilloId) {
             return false;
         }
-        if (!Objects.equals(this.v_productos, other.v_productos)) {
+        if (this.comboId != other.comboId) {
             return false;
         }
         return true;
@@ -89,7 +84,7 @@ public class PlatilloXCombo {
 
     @Override
     public String toString() {
-        return "Combo{" + " productos = " + v_productos + ", precio = " + v_precio + ", descripcion = " + v_nombre + '}';
+        return "PlatilloXCombo{" + "id=" + id + ", platilloId=" + platilloId + ", comboId=" + comboId + '}';
     }
-
+    
 }

@@ -6,8 +6,7 @@
 package com.tupuntodeventa.BL.Cup;
 
 import com.tupuntodeventa.BL.DAO.DAO;
-import com.tupuntodeventa.BL.Prod.PlatilloDao;
-
+import com.tupuntodeventa.BL.Prod.PlatilloDAO;
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.DriverManager;
@@ -26,11 +25,11 @@ import java.util.logging.Logger;
 public class CuponDao extends DAO {
 
     private final String BUSCAR_TODOS = "SELECT * FROM cupones";
-    private final String BUSCAR_CUPON = "SELECT *  AS cupon FROM cupones WHERE ID = ?";
+    private final String BUSCAR_USADOS = "SELECT * FROM cupones WHERE Utilizado = ?";
     private final String REGISTRAR_CUPON = "INSERT INTO cupones  (Id, FechaExpiracion,Utilizado, Codigo,Porcentaje) VALUES (?, ?, ?, ?, ?)";
 
 
-    //BUSCA TODOS LOS PLATILLOS DE LA TABLA Y LOS DEVUELVE EN UNA LISTA
+    //BUSCA TODOS LOS CUPONES  DE LA TABLA Y LOS DEVUELVE EN UNA LISTA
 
     public List<Cupon> buscarTodos() {
         List<Cupon> v_lista = new ArrayList<>();
@@ -65,7 +64,7 @@ public class CuponDao extends DAO {
              PreparedStatement ps = registrarCuponPs(conn, v_nuevo)) {
             return ps.executeUpdate() > 0;
         } catch (SQLException ex) {
-            Logger.getLogger(PlatilloDao.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(PlatilloDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
         return false;
     }
@@ -84,4 +83,36 @@ public class CuponDao extends DAO {
     }
 
 
+        public List<Cupon> buscarUsados() {
+        List<Cupon> v_lista = new ArrayList<>();
+
+        try (Connection conn = DriverManager.getConnection(url, user, pass);
+             PreparedStatement ps = buscarUsadosPs(conn);
+             ResultSet rs = ps.executeQuery()) {
+            while (rs.next()) {
+                Cupon v_cupon = new Cupon();
+                v_cupon.setV_id(rs.getInt("Id"));
+                v_cupon.setV_expira(rs.getDate("FechaExpiracion").toLocalDate());
+                v_cupon.setV_usado(rs.getBoolean("Utilizado"));
+                v_cupon.setV_codigoBD(rs.getString("Codigo"));
+                v_cupon.setV_descuento(rs.getDouble("Porcentaje"));
+
+                v_lista.add(v_cupon);
+            }
+        } catch (SQLException ex) {
+
+        }
+
+        return v_lista;
+    }
+    
+    
+    
+      private PreparedStatement buscarUsadosPs(Connection conn) throws SQLException {
+        return conn.prepareStatement(BUSCAR_USADOS);
+    }
+    
+    
+    
+    
 }

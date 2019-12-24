@@ -5,6 +5,7 @@
  */
 package Controllers.UsuarioController;
 
+import com.tupuntodeventa.BL.Direccion.Direccion;
 import com.tupuntodeventa.BL.Usuarios.Administrador;
 import com.tupuntodeventa.BL.Usuarios.Cliente;
 import com.tupuntodeventa.BL.Usuarios.Empleado;
@@ -19,62 +20,65 @@ import java.util.List;
  * @author krisa
  */
 public class UsuariosController {
-  UsuarioDAO log = null;
 
+    UsuarioDAO log = new UsuarioDAO();
 
 //******************************USUARIO ADMINISTRADOR, REGISTRA,VALIDAR*************************************************************************    
-public boolean registrar_Admin(int v_rol, int v_ID, String v_correo, String v_pass, String v_usuario, String v_nombre, LocalDate v_fechanac, String genero, String v_telefono){
-Administrador admin = new Administrador (v_rol, v_ID, v_correo, v_pass, v_usuario, v_nombre, v_fechanac, genero, v_telefono);
-if (log.buscarTodos().contains(admin)){
-    return false;
-}else log.registrarUsuario(admin);
-return true;
-}
+    public boolean registrar_Admin(int v_rol, int v_ID, String v_correo, String v_pass, String v_usuario, String v_nombre, String v_apellido, String v_segundoapellido, LocalDate v_fechanac, String genero, String v_telefono) {
+        Administrador admin = new Administrador(v_rol, v_ID, v_correo, v_pass, v_usuario, v_nombre, v_apellido, v_segundoapellido, v_fechanac, genero, v_telefono);
+        if (log.buscarTodos().contains(admin)) {
+            return false;
+        } else {
+            log.registrarUsuario(admin);
+        }
+        return true;
+    }
 
-public boolean validarAdmin(){
-return log.verificarAdmin();
-}
-    
+    public boolean validarAdmin() {
+        return log.verificarAdmin();
+    }
+
 //******************************USUARIO CLIENTE, REGISTRAR,BUSCAR,LISTAR*************************************************************************    
-public boolean registrarCliente(String v_direcciones, int v_rol, int v_ID, String v_correo, String v_pass, String v_usuario, String v_nombre, LocalDate v_fechanac, String genero, String v_telefono){
-Cliente cli= new Cliente (v_direcciones,v_rol, v_ID, v_correo, v_pass, v_usuario, v_nombre, v_fechanac, genero, v_telefono);
+    public Direccion registrar_direccion(String direccionExacta, String canton, String distrito, String provincia, int distancia, int usuarioId) {
+        Direccion dir = new Direccion(direccionExacta, canton, distrito, provincia, distancia, usuarioId);
+        return dir;
+    }
 
-List <Usuario> temp =listarUsuarios();
-if (temp.contains(cli)){
-    return false;
-}else log.registrarUsuario(cli);
-return true;
+    public boolean registrarCliente(String direccionExacta, String canton, String distrito, String provincia, int distancia, int usuarioId, int v_rol, int v_ID, String v_correo, String v_pass, String v_usuario, String v_nombre, String v_apellido, String v_segundoapellido, LocalDate v_fechanac, String genero, String v_telefono) {
+        ArrayList<Direccion> v_direcciones = new ArrayList<>();
+        Direccion v_1 = new Direccion(direccionExacta, canton, distrito, provincia, distancia, usuarioId);
+        v_direcciones.add(v_1);
+        Cliente cli = new Cliente(v_direcciones, v_rol, v_ID, v_correo, v_pass, v_usuario, v_nombre, v_apellido, v_segundoapellido, v_fechanac, genero, v_telefono);
+        List<Usuario> temp = listarUsuarios();
+        if (temp.contains(cli)) {
+            return false;
+        } else {
+            log.registrarCliente(cli, v_1);
+        }
+        return true;
+    }
 
+    public boolean registrarEmpleado(String v_puesto, int v_salbase, double v_bonus, LocalDate v_inicia, int v_rol, int v_ID, String v_correo, String v_pass, String v_usuario, String v_nombre, String v_apellido, String v_segundoapellido, LocalDate v_fechanac, String genero, String v_telefono) {
+        int v_netsal = v_salbase + (int) v_bonus;
+        Empleado emp = new Empleado(v_puesto, v_salbase, v_bonus, v_netsal, v_inicia, v_rol, v_ID, v_correo, v_pass, v_usuario, v_nombre, v_apellido, v_segundoapellido, v_fechanac, genero, v_telefono);
 
+        List<Usuario> temp = listarUsuarios();
+        if (temp.contains(emp)) {
+            return false;
+        } else {
+            log.registrarUsuario(emp);
+        }
+        return true;
+    }
 
-}    
+    public List<Usuario> listarUsuarios() {
+        List<Usuario> all = log.buscarTodos();
+        return all;
+    }
 
-
-public boolean registrarEmpleado(String v_puesto, int v_salbase, double v_bonus, int v_netsal, LocalDate v_inicia, int v_rol, int v_ID, String v_correo, String v_pass, String v_usuario, String v_nombre, LocalDate v_fechanac, String genero, String v_telefono){
-    Empleado emp = new Empleado (v_puesto,v_salbase,v_bonus,v_netsal, v_inicia, v_rol, v_ID, v_correo, v_pass, v_usuario, v_nombre, v_fechanac,genero,v_telefono);
-
-    List <Usuario> temp =listarUsuarios();
-if (temp.contains(emp)){
-    return false;
-}else log.registrarUsuario(emp);
-return true;
-    
-    
-    
-    
-}
-public List<Usuario> listarUsuarios(){
-    List<Usuario> all= log.buscarTodos();  
-    return all;
-}
-    
-// necesito arreglarlo para me me devuelva el rol !!
-public boolean  IniciarSesion(String usuario,String pass){
-    return log.autenticar(usuario, pass);
-}
-
-
-
-
+// Devuelve un usuario!!
+    public Usuario IniciarSesion(String usuario, String pass) {
+        return log.autenticar(usuario, pass);
+    }
 
 }

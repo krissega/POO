@@ -9,7 +9,7 @@ import com.tupuntodeventa.BL.DAO.DAO;
 import com.tupuntodeventa.BL.Prod.Combo;
 import com.tupuntodeventa.BL.Prod.ComboDao;
 import com.tupuntodeventa.BL.Prod.Platillo;
-import com.tupuntodeventa.BL.Prod.PlatilloDao;
+import com.tupuntodeventa.BL.Prod.PlatilloDAO;
 import com.tupuntodeventa.BL.Usuarios.UsuarioDAO;
 
 import java.math.BigDecimal;
@@ -97,7 +97,7 @@ public class Orden_Dao extends DAO {
             }
 
             if (!idsPlatillos.isEmpty()) {
-                PlatilloDao platilloDao = new PlatilloDao();
+                PlatilloDAO platilloDao = new PlatilloDAO();
                 listaPlatillos = platilloDao.buscarPlatillos(conn, idsPlatillos);
             }
         } catch (SQLException ex) {

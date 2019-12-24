@@ -7,7 +7,6 @@ package Controllers.CuponController;
 
 import com.tupuntodeventa.BL.Cup.Cupon;
 import com.tupuntodeventa.BL.Cup.CuponDao;
-import com.tupuntodeventa.BL.Ord.OrdenDAO;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -20,9 +19,13 @@ public class CuponController {
        CuponDao log;
     
     public boolean registrarCupon(LocalDate v_expira, int v_id, double v_descuento, boolean v_usado){
+        if (log.buscarUsados().size()==50){
         Cupon c = new Cupon(v_expira,v_id, v_descuento, v_usado);
         log.registrarCupon(c);
         return true;
+        
+        }else 
+            return false;
     }
     
     public List <Cupon> listar(){
@@ -31,7 +34,12 @@ public class CuponController {
     }
     
     
+    public List<Cupon> listaUsados(){
     
+    List<Cupon> usados =log.buscarUsados();
+    
+    return usados;
+    }
     
     
 }

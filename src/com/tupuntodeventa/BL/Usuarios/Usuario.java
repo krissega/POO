@@ -26,7 +26,7 @@ public class Usuario {
     private int v_edad;
     private String genero;
     private String v_telefono;
-    private String identificacion;
+    //private String identificacion;
 
     public Usuario() {
     }
@@ -45,6 +45,7 @@ public class Usuario {
         this.v_edad = age_calculator(v_fechanac);
         this.genero = genero;
         this.v_telefono = v_telefono;
+        
     }
 
 
@@ -140,14 +141,14 @@ public class Usuario {
         this.v_telefono = v_telefono;
     }
 
-    public String getIdentificacion() {
+  /*  public String getIdentificacion() {
         return identificacion;
     }
 
     public void setIdentificacion(String identificacion) {
         this.identificacion = identificacion;
     }
-
+*/
     public int getV_rol() {
         return v_rol;
     }
@@ -188,18 +189,18 @@ public class Usuario {
                 Objects.equals(v_segundo_apellido, usuario.v_segundo_apellido) &&
                 Objects.equals(v_fechanac, usuario.v_fechanac) &&
                 Objects.equals(genero, usuario.genero) &&
-                Objects.equals(v_telefono, usuario.v_telefono) &&
-                Objects.equals(identificacion, usuario.identificacion);
+                Objects.equals(v_telefono, usuario.v_telefono);
+                //Objects.equals(identificacion, usuario.identificacion);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(v_rol, v_ID, v_correo, v_pass, v_usuario, v_nombre_pila, v_apellido, v_segundo_apellido, v_fechanac, v_edad, genero, v_telefono, identificacion);
+        return Objects.hash(v_rol, v_ID, v_correo, v_pass, v_usuario, v_nombre_pila, v_apellido, v_segundo_apellido, v_fechanac, v_edad, genero, v_telefono);
     }
 
     @Override
     public String toString() {
-        return "Usuario{Tipo de Usuario " + v_rol + "ID =" + v_ID + ", correo =" + v_correo + ", pass =" + v_pass + ", Nombre de usuario=" + v_usuario + ", nombre completo =" + v_nombre_pila + ", fecha de nacimiento =" + v_fechanac + ", edad = " + v_edad + ", genero = " + genero + ", telefono = " + v_telefono + ", identificacion = " + identificacion + '}';
+        return "Usuario{Tipo de Usuario " + v_rol + "ID =" + v_ID + ", correo =" + v_correo + ", pass =" + v_pass + ", Nombre de usuario=" + v_usuario + ", nombre completo =" + v_nombre_pila + ", fecha de nacimiento =" + v_fechanac + ", edad = " + v_edad + ", genero = " + genero + ", telefono = " + v_telefono + ", identificacion = ";
     }
 
 
