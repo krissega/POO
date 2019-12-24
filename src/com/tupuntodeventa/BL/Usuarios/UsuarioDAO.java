@@ -179,15 +179,25 @@ public class UsuarioDAO extends DAO {
 
     // usar para clientes
     public boolean registrarCliente(Cliente nuevoUsuario, Direccion direccion) {
+        ResultSet rs = null;
         try (Connection conn = DriverManager.getConnection(url, user, pass);
              PreparedStatement ps = registrarUsuarioPs(conn, nuevoUsuario)) {
-            ResultSet rs = ps.getGeneratedKeys();
+            ps.executeUpdate();
+            rs = ps.getGeneratedKeys();
             if (rs.next()) {
                 DireccionDAO direccionDAO = new DireccionDAO();
                 return direccionDAO.registrarDireccion(rs.getInt(1), direccion);
             }
         } catch (SQLException ex) {
             Logger.getLogger(UsuarioDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            if (rs != null) {
+                try {
+                    rs.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
         }
         return false;
     }
