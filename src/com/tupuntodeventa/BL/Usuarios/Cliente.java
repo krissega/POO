@@ -20,8 +20,8 @@ public class Cliente extends Usuario {
     private ArrayList<Direccion> v_direcciones;// como no se cuantas direcciones va a tener le pondre un maximo de 10
 
     public Cliente(ArrayList<Direccion> v_direcciones, int v_rol, int v_ID, String v_correo, String v_pass, String v_usuario,
-                   String v_nombre, String v_apellido, String v_segundo_apellido, LocalDate v_fechanac, String genero, String v_telefono) {
-        super(v_rol, v_ID, v_correo, v_pass, v_usuario, v_nombre, v_apellido, v_segundo_apellido, v_fechanac, genero, v_telefono);
+                   String v_nombre, String v_apellido, String v_segundo_apellido, LocalDate v_fechanac, String genero, String v_telefono, String identificacion) {
+        super(v_rol, v_ID, v_correo, v_pass, v_usuario, v_nombre, v_apellido, v_segundo_apellido, v_fechanac, genero, v_telefono, identificacion);
         this.v_direcciones = v_direcciones;
     }
 

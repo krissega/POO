@@ -6,14 +6,12 @@
 package IntermedioUI;
 
 import Controllers.UsuarioController.UsuariosController;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintStream;
-import static java.lang.System.in;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.Scanner;
 
 /**
  *
@@ -80,7 +78,7 @@ public class UsuariosUI {
  
    int v_rol=0;
     System.out.println("Ingrese su numero de ID ");
-   int v_ID =Integer.parseInt(in.readLine());
+   String identificacion =in.readLine();
     System.out.println("Ingrese su correo ");
     String v_correo=in.readLine();
     System.out.println("Ingrese su contrasena  ");
@@ -99,7 +97,7 @@ public class UsuariosUI {
     String genero  = in.readLine();
     System.out.println("Ingrese su  numero telefonico ");
     String v_telefono  = in.readLine();
-    if(log.registrar_Admin(v_rol, v_ID, v_correo, v_pass, v_usuario, v_nombre, v_apellido, v_segundo_apellido, v_fechanac, genero, v_telefono)){
+    if(log.registrar_Admin(v_rol, 0, v_correo, v_pass, v_usuario, v_nombre, v_apellido, v_segundo_apellido, v_fechanac, genero, v_telefono, identificacion)){
     out.print("Administrador Registrado con exito");
     }else  out.print("Algo salio mal ");
 }       
@@ -107,7 +105,7 @@ public class UsuariosUI {
 public void registrarEmpleado()throws IOException{
    int v_rol=1;
     System.out.println("Ingrese el numero de ID ");
-   int v_ID =Integer.parseInt(in.readLine());
+   String identificacion =in.readLine();
     System.out.println("Ingrese el  correo ");
     String v_correo=in.readLine();
     System.out.println("Ingrese la  contrasena  ");
@@ -135,7 +133,7 @@ public void registrarEmpleado()throws IOException{
     int  v_base   =Integer.parseInt(in.readLine());
     System.out.println("Ingrese el bono");
     double v_bono  =Double.parseDouble(in.readLine());
-  if(log.registrarEmpleado(v_puesto, v_base, v_bono, v_inicio, v_rol, v_ID, v_correo, v_pass, v_usuario, v_nombre, v_apellido, v_segundo_apellido, v_fechanac, genero, v_telefono)){
+  if(log.registrarEmpleado(v_puesto, v_base, v_bono, v_inicio, v_rol, 0, v_correo, v_pass, v_usuario, v_nombre, v_apellido, v_segundo_apellido, v_fechanac, genero, v_telefono, identificacion)){
     out.print("Empleado registrado con exito");
     } out.print("Algo salio mal ");
 
@@ -145,7 +143,7 @@ public void registrarEmpleado()throws IOException{
  
    int v_rol=0;
     System.out.println("Ingrese el  numero de ID ");
-   int v_ID =Integer.parseInt(in.readLine());
+   String identificacion =in.readLine();
     System.out.println("Ingrese el correo ");
     String v_correo=in.readLine();
     System.out.println("Ingrese la  contrasena  ");
@@ -176,7 +174,7 @@ public void registrarEmpleado()throws IOException{
     System.out.println("Ingrese la distancia ");
     int v_dist = Integer.parseInt(in.readLine());
   
-    if(log.registrarCliente(v_exacta, v_canton, v_distrito, v_provincia, v_dist, v_ID, v_rol, v_ID, v_correo, v_pass, v_usuario, v_nombre, v_apellido, v_segundo_apellido, v_fechanac, genero, v_telefono)){
+    if(log.registrarCliente(v_exacta, v_canton, v_distrito, v_provincia, v_dist, 0, v_rol, 0, v_correo, v_pass, v_usuario, v_nombre, v_apellido, v_segundo_apellido, v_fechanac, genero, v_telefono, identificacion)){
     out.print("Registrado con exito");
     } out.print("Algo salio mal ");
 

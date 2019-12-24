@@ -15,8 +15,8 @@ public class Administrador extends Usuario {
     public Administrador() {
     }
 
-    public Administrador(int v_rol, int v_ID, String v_correo, String v_pass, String v_usuario, String v_nombre_pila, String v_apellido, String v_segundo_apellido, LocalDate v_fechanac, String genero, String v_telefono) {
-        super(v_rol, v_ID, v_correo, v_pass, v_usuario, v_nombre_pila, v_apellido, v_segundo_apellido, v_fechanac, genero, v_telefono);
+    public Administrador(int v_rol, int v_ID, String v_correo, String v_pass, String v_usuario, String v_nombre_pila, String v_apellido, String v_segundo_apellido, LocalDate v_fechanac, String genero, String v_telefono, String identificacion) {
+        super(v_rol, v_ID, v_correo, v_pass, v_usuario, v_nombre_pila, v_apellido, v_segundo_apellido, v_fechanac, genero, v_telefono, identificacion);
     }
 
   

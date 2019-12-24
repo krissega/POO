@@ -23,7 +23,7 @@ import java.util.logging.Logger;
 public class UsuarioDAO extends DAO {
     
     private final String BUSCAR_TODOS = "SELECT * FROM usuarios";
-    private final String LOGIN = "SELECT Id FROM usuarios WHERE NombreUsuario = ? AND Clave = ?";
+    private final String LOGIN = "SELECT * FROM usuarios WHERE NombreUsuario = ? AND Clave = ?";
     private final String USUARIO_ID = "SELECT * FROM usuarios WHERE Id = ?";
     private final String VERIFICAR_ADMIN = "SELECT Id FROM usuarios WHERE Rol = 0";
     private final String VERIFICAR_IDENTIFICACION = "SELECT Id from usuarios WHERE Identificacion = ?";
@@ -47,7 +47,7 @@ public class UsuarioDAO extends DAO {
                 usuario.setGenero(rs.getString("Genero"));
                 usuario.setV_correo("Correo");
                 usuario.setV_usuario(rs.getString("NombreUsuario"));
-//                usuario.setIdentificacion(rs.getString("Identificacion"));
+                usuario.setIdentificacion(rs.getString("Identificacion"));
                 usuario.setV_fechanac(rs.getDate("FechaNac").toLocalDate());
                 usuario.setV_edad(Usuario.age_calculator(usuario.getV_fechanac()));
                 usuario.setV_nombre_pila(rs.getString("nombre"));
@@ -84,8 +84,8 @@ public class UsuarioDAO extends DAO {
                                 rs.getString("SegundoApellido"),
                                 rs.getDate("FechaNac").toLocalDate(),
                                 rs.getString("Genero"),
-                                rs.getString("Telefono"));
-                      //  usuario.setIdentificacion(rs.getString("Identificacion"));
+                                rs.getString("Telefono"),
+                                rs.getString("Identificacion"));
                         usuario.setV_edad(Usuario.age_calculator(usuario.getV_fechanac()));
                     break;
                     case 1:
@@ -93,7 +93,7 @@ public class UsuarioDAO extends DAO {
                         usuario.setV_rol(1);
                         usuario.setV_ID(rs.getInt("Id"));
                         usuario.setGenero(rs.getString("Genero"));
-                        //usuario.setIdentificacion(rs.getString("Identificacion"));
+                        usuario.setIdentificacion(rs.getString("Identificacion"));
                         usuario.setV_correo(rs.getString("Correo"));
                         usuario.setV_fechanac(rs.getDate("FechaNac").toLocalDate());
                         usuario.setV_edad(Usuario.age_calculator(usuario.getV_fechanac()));
@@ -116,7 +116,7 @@ public class UsuarioDAO extends DAO {
                                     null, rs.getString("NombreUsuario"),
                                 rs.getString("NombrePila"), rs.getString("Apellido"),
                                 rs.getString("SegundoApellido"), rs.getDate("FechaNac").toLocalDate(),
-                                rs.getString("Genero"), rs.getString("Telefono"));
+                                rs.getString("Genero"), rs.getString("Telefono"), rs.getString("Identificacion"));
 //                        usuario.setIdentificacion(rs.getString("Identificacion"));
                     break;
                 }
@@ -203,7 +203,7 @@ public class UsuarioDAO extends DAO {
         ps.setString(i++, nuevoUsuario.getV_segundo_apellido());
         ps.setDate(i++, Date.valueOf(nuevoUsuario.getV_fechanac()));
         ps.setString(i++, nuevoUsuario.getGenero());
-        ps.setInt(i++, nuevoUsuario.getV_ID());
+        ps.setString(i++, nuevoUsuario.getIdentificacion());
         ps.setString(i++, nuevoUsuario.getV_telefono()); 
         ps.setInt(i++, nuevoUsuario.getV_key_type());
 

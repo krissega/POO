@@ -24,8 +24,8 @@ public class UsuariosController {
     UsuarioDAO log = new UsuarioDAO();
 
 //******************************USUARIO ADMINISTRADOR, REGISTRA,VALIDAR*************************************************************************    
-    public boolean registrar_Admin(int v_rol, int v_ID, String v_correo, String v_pass, String v_usuario, String v_nombre, String v_apellido, String v_segundoapellido, LocalDate v_fechanac, String genero, String v_telefono) {
-        Administrador admin = new Administrador(v_rol, v_ID, v_correo, v_pass, v_usuario, v_nombre, v_apellido, v_segundoapellido, v_fechanac, genero, v_telefono);
+    public boolean registrar_Admin(int v_rol, int v_ID, String v_correo, String v_pass, String v_usuario, String v_nombre, String v_apellido, String v_segundoapellido, LocalDate v_fechanac, String genero, String v_telefono, String identificacion) {
+        Administrador admin = new Administrador(v_rol, v_ID, v_correo, v_pass, v_usuario, v_nombre, v_apellido, v_segundoapellido, v_fechanac, genero, v_telefono, identificacion);
         if (log.buscarTodos().contains(admin)) {
             return false;
         } else {
@@ -44,11 +44,11 @@ public class UsuariosController {
         return dir;
     }
 
-    public boolean registrarCliente(String direccionExacta, String canton, String distrito, String provincia, int distancia, int usuarioId, int v_rol, int v_ID, String v_correo, String v_pass, String v_usuario, String v_nombre, String v_apellido, String v_segundoapellido, LocalDate v_fechanac, String genero, String v_telefono) {
+    public boolean registrarCliente(String direccionExacta, String canton, String distrito, String provincia, int distancia, int usuarioId, int v_rol, int v_ID, String v_correo, String v_pass, String v_usuario, String v_nombre, String v_apellido, String v_segundoapellido, LocalDate v_fechanac, String genero, String v_telefono, String identificacion) {
         ArrayList<Direccion> v_direcciones = new ArrayList<>();
         Direccion v_1 = new Direccion(direccionExacta, canton, distrito, provincia, distancia, usuarioId);
         v_direcciones.add(v_1);
-        Cliente cli = new Cliente(v_direcciones, v_rol, v_ID, v_correo, v_pass, v_usuario, v_nombre, v_apellido, v_segundoapellido, v_fechanac, genero, v_telefono);
+        Cliente cli = new Cliente(v_direcciones, v_rol, v_ID, v_correo, v_pass, v_usuario, v_nombre, v_apellido, v_segundoapellido, v_fechanac, genero, v_telefono, identificacion);
         List<Usuario> temp = listarUsuarios();
         if (temp.contains(cli)) {
             return false;
@@ -58,9 +58,9 @@ public class UsuariosController {
         return true;
     }
 
-    public boolean registrarEmpleado(String v_puesto, int v_salbase, double v_bonus, LocalDate v_inicia, int v_rol, int v_ID, String v_correo, String v_pass, String v_usuario, String v_nombre, String v_apellido, String v_segundoapellido, LocalDate v_fechanac, String genero, String v_telefono) {
+    public boolean registrarEmpleado(String v_puesto, int v_salbase, double v_bonus, LocalDate v_inicia, int v_rol, int v_ID, String v_correo, String v_pass, String v_usuario, String v_nombre, String v_apellido, String v_segundoapellido, LocalDate v_fechanac, String genero, String v_telefono, String identificacion) {
         int v_netsal = v_salbase + (int) v_bonus;
-        Empleado emp = new Empleado(v_puesto, v_salbase, v_bonus, v_netsal, v_inicia, v_rol, v_ID, v_correo, v_pass, v_usuario, v_nombre, v_apellido, v_segundoapellido, v_fechanac, genero, v_telefono);
+        Empleado emp = new Empleado(v_puesto, v_salbase, v_bonus, v_netsal, v_inicia, v_rol, v_ID, v_correo, v_pass, v_usuario, v_nombre, v_apellido, v_segundoapellido, v_fechanac, genero, v_telefono, identificacion);
 
         List<Usuario> temp = listarUsuarios();
         if (temp.contains(emp)) {
