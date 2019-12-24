@@ -203,7 +203,7 @@ public class UsuarioDAO extends DAO {
         ps.setString(i++, nuevoUsuario.getV_segundo_apellido());
         ps.setDate(i++, Date.valueOf(nuevoUsuario.getV_fechanac()));
         ps.setString(i++, nuevoUsuario.getGenero());
-        //ps.setString(i++, nuevoUsuario.getIdentificacion());
+        ps.setInt(i++, nuevoUsuario.getV_ID());
         ps.setString(i++, nuevoUsuario.getV_telefono()); 
         ps.setInt(i++, nuevoUsuario.getV_key_type());
 
