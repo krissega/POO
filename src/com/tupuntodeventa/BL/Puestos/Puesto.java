@@ -12,22 +12,25 @@ import java.util.Objects;
  * @author krisa
  */
 public class Puesto {
+    Puesto(){
+    }
     
-    private String v_ID;
+    private int v_ID;
     private String v_puesto;
     private String v_describ;
 
-    public Puesto(String v_ID, String v_puesto, String v_describ) {
-        this.v_ID = v_ID;
+    public Puesto(String v_puesto, String v_describ) {
         this.v_puesto = v_puesto;
         this.v_describ = v_describ;
     }
 
-    public String getV_ID() {
+ 
+
+    public int getV_ID() {
         return v_ID;
     }
 
-    public void setV_ID(String v_ID) {
+    public void setV_ID(int  v_ID) {
         this.v_ID = v_ID;
     }
 

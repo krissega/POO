@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class ComboDao extends DAO {
+public class ComboDAO extends DAO {
 
     private final String BUSCAR_TODOS = "SELECT * FROM combos";
     private final String BUSCAR_COMBOS = "SELECT * FROM Combos WHERE Id IN "; // VA A RECIBIR VARIOS IDS DE COMBOS
@@ -73,7 +73,7 @@ public class ComboDao extends DAO {
              PreparedStatement ps = registrarComboPs(conn, nuevoCombo)) {
             return ps.executeUpdate() > 0;
         } catch (SQLException ex) {
-            Logger.getLogger(ComboDao.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ComboDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
         return false;
     }

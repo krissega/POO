@@ -42,16 +42,56 @@ public class UsuarioDAO extends DAO {
                 PreparedStatement ps = buscarTodosPs(conn);
                 ResultSet rs = ps.executeQuery()) {
             while (rs.next()) {
-                Usuario usuario = new Usuario();
-                usuario.setV_ID(rs.getInt("Id"));
-                usuario.setGenero(rs.getString("Genero"));
-                usuario.setV_correo("Correo");
-                usuario.setV_usuario(rs.getString("NombreUsuario"));
-                usuario.setIdentificacion(rs.getString("Identificacion"));
-                usuario.setV_fechanac(rs.getDate("FechaNac").toLocalDate());
-                usuario.setV_edad(Usuario.age_calculator(usuario.getV_fechanac()));
-                usuario.setV_nombre_pila(rs.getString("nombre"));
-                
+                Usuario usuario = null;
+                switch (rs.getInt("Rol")) {
+                    case 0:
+                        usuario = new Administrador(
+                                0,
+                                rs.getInt("Id"),
+                                rs.getString("Correo"),
+                                null,
+                                rs.getString("NombreUsuario"),
+                                rs.getString("NombrePila"),
+                                rs.getString("Apellido"),
+                                rs.getString("SegundoApellido"),
+                                rs.getDate("FechaNac").toLocalDate(),
+                                rs.getString("Genero"),
+                                rs.getString("Telefono"),
+                                rs.getString("Identificacion"));
+                        usuario.setV_edad(Usuario.age_calculator(usuario.getV_fechanac()));
+                    break;
+                    case 1:
+                        usuario = new Empleado();
+                        usuario.setV_rol(1);
+                        usuario.setV_ID(rs.getInt("Id"));
+                        usuario.setGenero(rs.getString("Genero"));
+                        usuario.setIdentificacion(rs.getString("Identificacion"));
+                        usuario.setV_correo(rs.getString("Correo"));
+                        usuario.setV_fechanac(rs.getDate("FechaNac").toLocalDate());
+                        usuario.setV_edad(Usuario.age_calculator(usuario.getV_fechanac()));
+                        usuario.setV_nombre_pila(rs.getString("NombrePila"));
+                        usuario.setV_usuario(rs.getString("NombreUsuario"));
+                        usuario.setV_apellido(rs.getString("Apellido"));
+                        usuario.setV_segundo_apellido(rs.getString("SegundoApellido"));
+                        usuario.setV_telefono("Telefono");
+                        ((Empleado) usuario).setV_puesto(rs.getString("NombrePuesto"));
+                        ((Empleado) usuario).setV_salbase(rs.getInt("SalarioBase"));
+                        ((Empleado) usuario).setV_bonus(rs.getDouble("Bonificacion"));
+                        ((Empleado) usuario).setV_netsal(rs.getInt("SalarioNeto"));
+                        ((Empleado) usuario).setV_inicia(rs.getDate("FechaContrato").toLocalDate());
+                        break;
+                    case 2:
+                        DireccionDAO direccionDAO = new DireccionDAO();
+                        int idUsuario = rs.getInt("Id");
+                        usuario = new Cliente(direccionDAO.buscarDireccionesUsuario(idUsuario),
+                                2, idUsuario, rs.getString("Correo"),
+                                    null, rs.getString("NombreUsuario"),
+                                rs.getString("NombrePila"), rs.getString("Apellido"),
+                                rs.getString("SegundoApellido"), rs.getDate("FechaNac").toLocalDate(),
+                                rs.getString("Genero"), rs.getString("Telefono"), rs.getString("Identificacion"));
+//                        usuario.setIdentificacion(rs.getString("Identificacion"));
+                    break;
+                }
                 usuarios.add(usuario);
             }
         } catch (SQLException ex) {
@@ -179,22 +219,32 @@ public class UsuarioDAO extends DAO {
 
     // usar para clientes
     public boolean registrarCliente(Cliente nuevoUsuario, Direccion direccion) {
+        ResultSet rs = null;
         try (Connection conn = DriverManager.getConnection(url, user, pass);
              PreparedStatement ps = registrarUsuarioPs(conn, nuevoUsuario)) {
-            ResultSet rs = ps.getGeneratedKeys();
+            ps.executeUpdate();
+            rs = ps.getGeneratedKeys();
             if (rs.next()) {
                 DireccionDAO direccionDAO = new DireccionDAO();
                 return direccionDAO.registrarDireccion(rs.getInt(1), direccion);
             }
         } catch (SQLException ex) {
             Logger.getLogger(UsuarioDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            if (rs != null) {
+                try {
+                    rs.close();
+                } catch (SQLException ex) {
+                    Logger.getLogger(UsuarioDAO.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
         }
         return false;
     }
 
     public PreparedStatement registrarUsuarioPs(Connection conn, Usuario nuevoUsuario) throws SQLException {
         int i = 1;
-        PreparedStatement ps = conn.prepareStatement(REGISTRAR_USUARIO);
+        PreparedStatement ps = conn.prepareStatement(REGISTRAR_USUARIO, Statement.RETURN_GENERATED_KEYS);
         ps.setString(i++, nuevoUsuario.getV_usuario());
         ps.setString(i++, nuevoUsuario.getV_pass());
         ps.setString(i++, nuevoUsuario.getV_correo());

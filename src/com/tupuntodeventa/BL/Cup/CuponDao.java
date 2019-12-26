@@ -26,7 +26,7 @@ public class CuponDao extends DAO {
 
     private final String BUSCAR_TODOS = "SELECT * FROM cupones";
     private final String BUSCAR_USADOS = "SELECT * FROM cupones WHERE Utilizado = ?";
-    private final String REGISTRAR_CUPON = "INSERT INTO cupones  (Id, FechaExpiracion,Utilizado, Codigo,Porcentaje) VALUES (?, ?, ?, ?, ?)";
+    private final String REGISTRAR_CUPON = "INSERT INTO cupones  (FechaExpiracion,Utilizado, Codigo,Porcentaje) VALUES (?, ?, ?, ?)";
 
 
     //BUSCA TODOS LOS CUPONES  DE LA TABLA Y LOS DEVUELVE EN UNA LISTA
@@ -72,7 +72,6 @@ public class CuponDao extends DAO {
     public PreparedStatement registrarCuponPs(Connection conn, Cupon v_nuevo) throws SQLException {
         int i = 1;
         PreparedStatement ps = conn.prepareStatement(REGISTRAR_CUPON, Statement.RETURN_GENERATED_KEYS);
-        ps.setInt(i++, v_nuevo.getV_id());
         ps.setDate(i++, Date.valueOf(v_nuevo.getV_expira()));
         ps.setBoolean(i++, v_nuevo.getV_usado());
         ps.setString(i++, v_nuevo.getV_codigo());
@@ -83,11 +82,11 @@ public class CuponDao extends DAO {
     }
 
 
-        public List<Cupon> buscarUsados() {
+        public List<Cupon> buscarUsados(boolean usado) {
         List<Cupon> v_lista = new ArrayList<>();
 
         try (Connection conn = DriverManager.getConnection(url, user, pass);
-             PreparedStatement ps = buscarUsadosPs(conn);
+             PreparedStatement ps = buscarUsadosPs(conn, usado);
              ResultSet rs = ps.executeQuery()) {
             while (rs.next()) {
                 Cupon v_cupon = new Cupon();
@@ -108,8 +107,10 @@ public class CuponDao extends DAO {
     
     
     
-      private PreparedStatement buscarUsadosPs(Connection conn) throws SQLException {
-        return conn.prepareStatement(BUSCAR_USADOS);
+      private PreparedStatement buscarUsadosPs(Connection conn, boolean usado) throws SQLException {
+          PreparedStatement ps = conn.prepareStatement(BUSCAR_USADOS);
+          ps.setBoolean(1, usado);
+          return ps;
     }
     
     

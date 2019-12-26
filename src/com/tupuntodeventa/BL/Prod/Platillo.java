@@ -17,8 +17,7 @@ public class Platillo {
     private String v_descripcion;
     private double v_precio;
 
-    public Platillo(int v_ID, String v_nombre, String v_descripcion, double v_precio) {
-        this.v_ID = v_ID;
+    public Platillo( String v_nombre, String v_descripcion, double v_precio) {
         this.v_nombre = v_nombre;
         this.v_descripcion = v_descripcion;
         this.v_precio = v_precio;

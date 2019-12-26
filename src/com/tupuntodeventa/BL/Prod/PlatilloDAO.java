@@ -95,12 +95,12 @@ public class PlatilloDAO extends DAO {
     }
   
     public PreparedStatement registrarPlatilloPs(Connection conn, Platillo  v_platillo) throws SQLException {
-        int i = 0;
+        int i = 1;
         PreparedStatement ps = conn.prepareStatement(REGISTRAR_PLATILLO, Statement.RETURN_GENERATED_KEYS);
-        ps.setInt(i++,v_platillo.getV_ID());
         ps.setString(i++,v_platillo.getV_nombre());
-        ps.setString(i++,v_platillo.getV_descripcion());
         ps.setDouble(i++,v_platillo.getV_precio());
+        ps.setString(i++,v_platillo.getV_descripcion());
+      
 
      
 

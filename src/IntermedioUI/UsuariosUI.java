@@ -5,6 +5,7 @@
  */
 package IntermedioUI;
 
+import Controllers.CuponController.CuponController;
 import Controllers.UsuarioController.UsuariosController;
 
 import java.io.BufferedReader;
@@ -12,16 +13,20 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintStream;
 import java.time.LocalDate;
+import java.util.List;
 
 /**
  *
  * @author krisa
  */
 public class UsuariosUI {
-    
+    ProductosUI p = new ProductosUI();
+    OrdenUI o = new  OrdenUI();
     UsuariosController  log = new UsuariosController ();
+    CuponController c = new CuponController();
     static BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
     static PrintStream out = System.out;
+
    
     public void iniciarSesion(String u, String p) throws IOException{
      if (log.IniciarSesion(u,p) == null) {
@@ -32,36 +37,43 @@ public class UsuariosUI {
                 System.out.println("Ingrese la clave:");
                 p = in.readLine();
             
+                
             } while (log.IniciarSesion(u,p) == null);
         }
         
      int rol= log.IniciarSesion(u, p).getV_rol();
     
-    MenuAfterLogin(rol);
+        MenuAfterLogin(rol);
     } 
  
-    public void MenuAfterLogin (int rol){//DEBE DE RECIBIR EL ROL DESPUES DE INICIO DE SESION , NECESITO DEVOLVER CON EL QUERY
+    public void MenuAfterLogin (int rol) throws IOException{//DEBE DE RECIBIR EL ROL DESPUES DE INICIO DE SESION , NECESITO DEVOLVER CON EL QUERY
         
+        int v_option=0;
         switch(rol){
         
             case 0:
+                
+        do{
         System.out.println("Bienvenido al sistema Punto Venta, ingrese la opcion deseada  ");
         System.out.println("1.  Registrar Empleado ");
         System.out.println("2.  Registrar Cliente ");
         System.out.println("3.  Listar Usuarios ");
         System.out.println("4.  Registrar Producto ");
-        System.out.println("5.  Listar Producto ");
+        System.out.println("5.  Listar Productos ");
         System.out.println("6.  Registrar Puesto ");
         System.out.println("7.  Listar Puestos ");
         System.out.println("8.  Registrar Cupones ");
         System.out.println("9.  Listar Cupones  ");
         System.out.println("10.  Salir");
-         
+        v_option=Integer.parseInt(in.readLine());
+          ejecutarOpcion(v_option);
+        }while (v_option != 10);
+        
         
         break;
         
             case 1:
-        System.out.println("Bienvenido al sistema Punto Venta, el perfil de empleado se encuentra en mantenimiento, gracias por su comprension   ");
+        System.out.println("Bienvenido al sistema Punto Venta, el perfil de empleado se encuentra en mantenimiento, gracias por su paciencia    ");
         break;
         
         case 2:
@@ -69,11 +81,68 @@ public class UsuariosUI {
         System.out.println("5.  Nuestros Productos ");
         System.out.println("11.  Registrar Orden ");
         System.out.println("10.  Salir");
+         v_option=Integer.parseInt(in.readLine());
         break;
         
         }
   
-    }        
+        ejecutarOpcion(v_option);
+        
+    }
+    
+    ////////EJECUCION DE LA OPCION INGRESADA 
+      
+   public void ejecutarOpcion(int v_opcion) throws java.io.IOException {
+    switch(v_opcion){
+        case 1:
+            registrarEmpleado();
+            break;
+            
+             case 2:
+                 registrarCliente();
+            break;
+             case 3:
+                 listarUsuarios();
+            break;
+             case 4:
+                 p.RegistrarProducto();
+            break;
+             case 5:
+                 p.listar_Productos();
+            break;
+             case 6:
+                 registrarPuesto();
+            break;
+             case 7:
+                 listarPuestos();
+            break;
+             case 8:
+                 crearCupones();
+            break;
+             case 9:
+                listarCupones();
+                 break;
+            case 10:
+            break;
+             case 11:
+                 o.registrarOrden();
+            break;
+             default:
+                 break;
+    
+    
+    
+    
+  }    
+       
+    
+    
+   
+}
+    
+    
+    
+    
  public void registrarAdministrador()throws IOException{
  
    int v_rol=0;
@@ -135,7 +204,7 @@ public void registrarEmpleado()throws IOException{
     double v_bono  =Double.parseDouble(in.readLine());
   if(log.registrarEmpleado(v_puesto, v_base, v_bono, v_inicio, v_rol, 0, v_correo, v_pass, v_usuario, v_nombre, v_apellido, v_segundo_apellido, v_fechanac, genero, v_telefono, identificacion)){
     out.print("Empleado registrado con exito");
-    } out.print("Algo salio mal ");
+    } else out.print("Algo salio mal ");
 
 }
 
@@ -176,27 +245,64 @@ public void registrarEmpleado()throws IOException{
   
     if(log.registrarCliente(v_exacta, v_canton, v_distrito, v_provincia, v_dist, 0, v_rol, 0, v_correo, v_pass, v_usuario, v_nombre, v_apellido, v_segundo_apellido, v_fechanac, genero, v_telefono, identificacion)){
     out.print("Registrado con exito");
-    } out.print("Algo salio mal ");
+    }else  out.print("Algo salio mal ");
 
  }
 
  
 //Imprime solamente los nombres Usuario, no muestra toda la informacion del mismo 
 public void listarUsuarios(){
-out.print("Los usuarios registrados hasta el momento son :  ");
-    for (int i =0; i<log.listarUsuarios().size();i++){
-    out.print(log.listarUsuarios().get(i).getV_usuario());
+    List <String> all= log.listarNombreUsuarios();
+out.println("Los usuarios registrados hasta el momento son :  ");
+    for (int i =0; i<all.size();i++){
+    out.println(all.get(i));
 }
 }        
- 
 
+/////////////Funciones del registro de puestos 
 
+public void registrarPuesto() throws IOException{
+out.println("Ingrese el nombre del puesto a registrar ");
+String v_puesto = in.readLine();
+out.println("Ingrese la descripcion del puesto");
+String v_descrip = in.readLine();
+if (log.registrarPuesto(v_puesto, v_descrip)){
+    out.print("Registrado con exito");
+}else  out.print("Algo salio mal ");
 
+}
 
-public boolean ejecutarOpcion(int pdato) throws java.io.IOException {
-        boolean salir=false;
-        return salir;
-    }
-    
+public void listarPuestos(){
+out.println("Los puestos  registrados hasta el momento son :  ");
+    for (int i =0; i<log.listarPuestos().size();i++){
+    out.println(log.listarPuestos().get(i).getV_puesto());
+}
+} 
+
+public void crearCupones(){
+    out.println("EL sistema automaticamente crea 50 cupones cada vez que utilice este metodo, no permitira que cree mas cupones hasta que todos los cupones sean utilizados ");
+    if (c.registrarCupon()){
+    out.println("Cupones creados con exito");
+    listarCupones();
+}else out.println("Se deben de utilizar todos los cupones registrados antes de crear nuevo, el total de cupones utilizados  son "+c.listaUsados().size());
     
 }
+
+
+public void listarCupones(){
+out.print("Cupones registrados  :  ");
+    for (int i =0; i<c.listar().size();i++){
+    out.println(c.listar().get(i).getV_id()+" "+c.listar().get(i).getV_codigo()+" "+"Expira el : "+c.listar().get(i).getV_expira());
+}
+
+}
+
+
+
+
+} 
+
+
+
+
+

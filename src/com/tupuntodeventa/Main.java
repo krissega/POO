@@ -10,6 +10,7 @@ import IntermedioUI.UsuariosUI;
 import com.tupuntodeventa.BL.Usuarios.Administrador;
 import com.tupuntodeventa.BL.Usuarios.Usuario;
 import java.io.IOException;
+import java.util.Random;
 
 import java.util.Scanner;
 
@@ -19,7 +20,7 @@ import java.util.Scanner;
  */
 public class Main {
     public static void main(String[] args) throws IOException {
-        UsuariosController log;
+       UsuariosController log;
         UsuariosUI k =new UsuariosUI();
         iniciarBD();
         // menú
@@ -35,8 +36,8 @@ public class Main {
         System.out.println("Ingrese la clave:");
         String v_clave = scanner.nextLine();
         k.iniciarSesion(v_nombreUsuario, v_clave);
-        
-    }
+ 
+     }
 
     private static void iniciarBD() {
         try {
@@ -45,4 +46,8 @@ public class Main {
             e.printStackTrace();
         }
     }
+
+
+
+
 }

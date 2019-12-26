@@ -2,6 +2,7 @@ package com.tupuntodeventa.BL.Cup;
 
 import java.time.LocalDate;
 import java.util.Objects;
+import java.util.Random;
 
 public class Cupon{
 
@@ -24,12 +25,21 @@ private boolean v_usado;
     
     //AGREGAR CUERPO DE LA CLASE 
     public String randomCode(){
-    return "";
-     }
+    int leftLimit = 50; // numeral '0'
+    int rightLimit = 122; // letter 'z'
+    int targetStringLength = 6;
+    Random random = new Random();
+ 
+    String code= random.ints(leftLimit, rightLimit + 1)
+      .filter(i -> (i <= 57 || i >= 65) && (i <= 90 || i >= 97))
+      .limit(targetStringLength)
+      .collect(StringBuilder::new, StringBuilder::appendCodePoint, StringBuilder::append)
+      .toString();
+ 
+    return code ;
     
-    
-    
-    
+    }
+
     public LocalDate getV_expira() {
         return v_expira;
     }
@@ -51,7 +61,7 @@ private boolean v_usado;
     }
 
     public void setV_codigo() {
-        this.v_codigo=randomCode();
+        this.v_codigo = randomCode();
     }
 
     

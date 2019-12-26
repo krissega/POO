@@ -7,7 +7,7 @@ package com.tupuntodeventa.BL.Ord;
 
 import com.tupuntodeventa.BL.DAO.DAO;
 import com.tupuntodeventa.BL.Prod.Combo;
-import com.tupuntodeventa.BL.Prod.ComboDao;
+import com.tupuntodeventa.BL.Prod.ComboDAO;
 import com.tupuntodeventa.BL.Prod.Platillo;
 import com.tupuntodeventa.BL.Prod.PlatilloDAO;
 import com.tupuntodeventa.BL.Usuarios.UsuarioDAO;
@@ -73,7 +73,7 @@ public class Orden_Dao extends DAO {
             }
 
             if (!idsCombos.isEmpty()) {
-                ComboDao comboDao = new ComboDao();
+                ComboDAO comboDao = new ComboDAO();
                 listaCombos = comboDao.buscarCombos(conn, idsCombos);
             }
         } catch (SQLException ex) {

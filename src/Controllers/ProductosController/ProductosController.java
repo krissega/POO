@@ -5,7 +5,8 @@
  */
 package Controllers.ProductosController;
 
-import com.tupuntodeventa.BL.Prod.ComboDao;
+import com.tupuntodeventa.BL.Prod.Combo;
+import com.tupuntodeventa.BL.Prod.ComboDAO;
 import com.tupuntodeventa.BL.Prod.Platillo;
 import com.tupuntodeventa.BL.Prod.PlatilloDAO;
 
@@ -17,10 +18,10 @@ import java.util.List;
  */
 public class ProductosController {
     
-    PlatilloDAO log;
-    ComboDao cob;    
-    public boolean registrarPlatillo(int v_ID, String v_nombre, String v_descripcion, double v_precio){
-        Platillo p = new Platillo(v_ID, v_nombre,v_descripcion, v_precio);
+    PlatilloDAO log = new PlatilloDAO();
+    ComboDAO cob = new ComboDAO();    
+    public boolean registrarPlatillo(String v_nombre, String v_descripcion, double v_precio){
+        Platillo p = new Platillo(v_nombre,v_descripcion, v_precio);
         log.registrarPlatillo(p);
         return true;
     }
@@ -30,6 +31,14 @@ public class ProductosController {
     List <Platillo> all = log.buscarTodos();
     return all;
     }
+    
+    
+    public List <Combo> listarC(){
+    List <Combo> all = cob.buscarTodos();
+    return all;
+    }
+    
+    
        
 }
     

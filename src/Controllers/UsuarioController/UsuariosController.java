@@ -6,11 +6,13 @@
 package Controllers.UsuarioController;
 
 import com.tupuntodeventa.BL.Direccion.Direccion;
+import com.tupuntodeventa.BL.Puestos.Puesto;
 import com.tupuntodeventa.BL.Usuarios.Administrador;
 import com.tupuntodeventa.BL.Usuarios.Cliente;
 import com.tupuntodeventa.BL.Usuarios.Empleado;
 import com.tupuntodeventa.BL.Usuarios.Usuario;
 import com.tupuntodeventa.BL.Usuarios.UsuarioDAO;
+import com.tupuntodeventa.BL.Puestos.PuestoDAO;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -22,6 +24,7 @@ import java.util.List;
 public class UsuariosController {
 
     UsuarioDAO log = new UsuarioDAO();
+    PuestoDAO plog = new  PuestoDAO();
 
 //******************************USUARIO ADMINISTRADOR, REGISTRA,VALIDAR*************************************************************************    
     public boolean registrar_Admin(int v_rol, int v_ID, String v_correo, String v_pass, String v_usuario, String v_nombre, String v_apellido, String v_segundoapellido, LocalDate v_fechanac, String genero, String v_telefono, String identificacion) {
@@ -80,5 +83,32 @@ public class UsuariosController {
     public Usuario IniciarSesion(String usuario, String pass) {
         return log.autenticar(usuario, pass);
     }
+    
+    
+ public boolean registrarPuesto(String puesto, String descrip){
+     Puesto p = new Puesto (puesto,descrip);
+     return plog.registrarPuesto(p);
+ 
+ 
+ }   
+
+ public List<Puesto>listarPuestos(){
+ List<Puesto>all = plog.buscarTodos();
+ return all;
+ }
+ 
+
+public List<String> listarNombreUsuarios() {
+        List<Usuario> temp = log.buscarTodos();
+        List<String>all = new ArrayList<>();
+        for (int i=0;i<temp.size();i++){
+            all.add(temp.get(i).getV_usuario());
+        }
+        
+        
+        return all;
+    }
+
+
 
 }
