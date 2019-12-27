@@ -29,7 +29,8 @@ public class UsuariosController {
 //******************************USUARIO ADMINISTRADOR, REGISTRA,VALIDAR*************************************************************************    
     public boolean registrar_Admin(int v_rol, int v_ID, String v_correo, String v_pass, String v_usuario, String v_nombre, String v_apellido, String v_segundoapellido, LocalDate v_fechanac, String genero, String v_telefono, String identificacion) {
         Administrador admin = new Administrador(v_rol, v_ID, v_correo, v_pass, v_usuario, v_nombre, v_apellido, v_segundoapellido, v_fechanac, genero, v_telefono, identificacion);
-        if (log.buscarTodos().contains(admin)) {
+        int flag = admin.getV_edad();
+        if (log.buscarTodos().contains(admin)||flag<18) {
             return false;
         } else {
             log.registrarUsuario(admin);
@@ -53,7 +54,7 @@ public class UsuariosController {
         v_direcciones.add(v_1);
         Cliente cli = new Cliente(v_direcciones, v_rol, v_ID, v_correo, v_pass, v_usuario, v_nombre, v_apellido, v_segundoapellido, v_fechanac, genero, v_telefono, identificacion);
         List<Usuario> temp = listarUsuarios();
-        if (temp.contains(cli)) {
+        if (temp.contains(cli)||cli.getV_edad()<15) {
             return false;
         } else {
             log.registrarCliente(cli, v_1);
