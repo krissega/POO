@@ -28,8 +28,8 @@ public class OrdenDAO extends DAO {
     private final String BUSCAR_TODOS = "SELECT * FROM ordenes";
     private final String BUSCAR_ORDEN ="SELECT * FROM ordenes WHERE id = ?";
     private final String BUSCAR_CONTENIDO = "SELECT * FROM ordencontenido WHERE IdOrden = ?";
-    private final String REGISTRAR_ORDEN = "INSERT INTO Ordenes (IdUsuario, IdCliente, TipoOrden, Fecha) " +
-            "VALUES (?, ?, ?, ?)";
+    private final String REGISTRAR_ORDEN = "INSERT INTO Ordenes (IdUsuario, IdCliente, TipoOrden, Fecha, Precio) " +
+            "VALUES (?, ?, ?, ?, ?)";
     private final String REGISTRAR_CONTENIDO = "INSERT INTO ordencontenido (TipoContenido, IdContenido, IdOrden) VALUES(?,?,?)";
 
 
@@ -177,7 +177,8 @@ public class OrdenDAO extends DAO {
         ps.setInt(i++, v_orden.getV_usuarioId());
         ps.setInt(i++, v_orden.getV_clienteId());
         ps.setInt(i++, Integer.parseInt(v_orden.getV_tipo()));
-        ps.setTimestamp(i, Timestamp.valueOf(v_orden.getV_fecha()));
+        ps.setTimestamp(i++, Timestamp.valueOf(v_orden.getV_fecha()));
+        ps.setDouble(i, v_orden.getV_total());
 
         return ps;
     }
