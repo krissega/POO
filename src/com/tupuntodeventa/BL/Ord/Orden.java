@@ -136,14 +136,14 @@ public class Orden {
     @Override
     public String toString() {
         return "Orden{" +
-                "v_tipo='" + v_tipo + '\'' +
-                ", v_usuarioId=" + v_usuarioId +
-                ", v_clienteId=" + v_clienteId +
-                ", v_fecha=" + v_fecha +
-                ", v_combos=" + v_combos +
-                ", v_prods=" + v_prods +
-                ", v_total=" + v_total +
-                '}';
+                "-----------------------------------------" +
+                "El tipo  de orden es : " + v_tipo + "\n " +
+                "usuario  " + v_usuarioId +"\n " +
+                "Id cliente " + v_clienteId +"\n " +
+                "Fecha de Orden " + v_fecha +"\n " +
+                " v_total=" + v_total +"\n " +
+                "-----------------------------------------"
+                +'}';
     }
 
 }

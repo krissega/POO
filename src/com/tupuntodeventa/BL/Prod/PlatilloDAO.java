@@ -55,6 +55,27 @@ public class PlatilloDAO extends DAO {
     private PreparedStatement buscarTodosPs(Connection conn) throws SQLException {
         return conn.prepareStatement(BUSCAR_TODOS);
     }
+    
+    public ArrayList<Platillo> buscarPlatillos(ArrayList<Integer> idsPlatillos) {
+        ArrayList<Platillo> platillos = new ArrayList<>();
+        try (Connection conn = DriverManager.getConnection(url, user, pass);
+                PreparedStatement ps = buscarPlatillosPs(conn, idsPlatillos);
+                ResultSet rs = ps.executeQuery()) {
+            while (rs.next()) {
+                Platillo platillo = new Platillo();
+                platillo.setV_ID(rs.getInt("Id"));
+                platillo.setV_precio(rs.getDouble("Precio"));
+                platillo.setV_descripcion(rs.getString("Descripcion"));
+                platillo.setV_nombre("Nombre");
+
+                platillos.add(platillo);
+            }
+        } catch (SQLException e) {
+
+        }
+
+        return platillos;
+    }
 
     public ArrayList<Platillo> buscarPlatillos(Connection conn, ArrayList<Integer> idsPlatillos) {
         ArrayList<Platillo> platillos = new ArrayList<>();

@@ -41,6 +41,26 @@ public class ComboDAO extends DAO {
         return conn.prepareStatement(BUSCAR_TODOS);
     }
 
+    public ArrayList<Combo> buscarCombos(ArrayList<Integer> idsCombos) {
+        ArrayList<Combo> combos = new ArrayList<>();
+        try (Connection conn = DriverManager.getConnection(url, user, pass);
+                PreparedStatement ps = buscarCombosPs(conn, idsCombos);
+             ResultSet rs = ps.executeQuery()) {
+            while (rs.next()) {
+                Combo combo = new Combo();
+                combo.setId(rs.getInt("Id"));
+                combo.setPrecio(rs.getDouble("Precio"));
+                combo.setNombre("Nombre");
+
+                combos.add(combo);
+            }
+        } catch (SQLException e) {
+
+        }
+
+        return combos;
+    }
+    
     public ArrayList<Combo> buscarCombos(Connection conn, ArrayList<Integer> idsCombos) {
         ArrayList<Combo> combos = new ArrayList<>();
         try (PreparedStatement ps = buscarCombosPs(conn, idsCombos);

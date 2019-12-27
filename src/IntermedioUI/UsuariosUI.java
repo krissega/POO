@@ -7,6 +7,7 @@ package IntermedioUI;
 
 import Controllers.CuponController.CuponController;
 import Controllers.UsuarioController.UsuariosController;
+import com.tupuntodeventa.BL.Usuarios.Usuario;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -20,16 +21,19 @@ import java.util.List;
  * @author krisa
  */
 public class UsuariosUI {
+    OrdenUI o = new OrdenUI();
+    Usuario usuario_logueado = null; 
     ProductosUI p = new ProductosUI();
-    OrdenUI o = new  OrdenUI();
     UsuariosController  log = new UsuariosController ();
     CuponController c = new CuponController();
     static BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
     static PrintStream out = System.out;
+    
 
    
     public void iniciarSesion(String u, String p) throws IOException{
-     if (log.IniciarSesion(u,p) == null) {
+        usuario_logueado =log.IniciarSesion(u,p);
+     if (usuario_logueado == null) {
             do {
                 System.out.println("Nombre de usuario o clave incorrecta");
                 System.out.println("Ingrese un nombre de usuario: ");
@@ -37,13 +41,11 @@ public class UsuariosUI {
                 System.out.println("Ingrese la clave:");
                 p = in.readLine();
             
-                
-            } while (log.IniciarSesion(u,p) == null);
+                usuario_logueado =log.IniciarSesion(u,p);
+            } while (usuario_logueado == null);
         }
-        
-     int rol= log.IniciarSesion(u, p).getV_rol();
     
-        MenuAfterLogin(rol);
+        MenuAfterLogin(usuario_logueado.getV_rol());
     } 
  
     public void MenuAfterLogin (int rol) throws IOException{//DEBE DE RECIBIR EL ROL DESPUES DE INICIO DE SESION , NECESITO DEVOLVER CON EL QUERY
@@ -78,7 +80,6 @@ public class UsuariosUI {
         
         case 2:
         System.out.println("Bienvenido al sistema Punto Venta, ingrese la opcion deseada   ");
-        System.out.println("5.  Nuestros Productos ");
         System.out.println("11.  Registrar Orden ");
         System.out.println("10.  Salir");
          v_option=Integer.parseInt(in.readLine());
@@ -107,9 +108,9 @@ public class UsuariosUI {
              case 4:
                  p.RegistrarProducto();
             break;
-             case 5:
-                 p.listar_Productos();
-            break;
+            // case 5:
+              //   p.listar_Productos();
+            //break;
              case 6:
                  registrarPuesto();
             break;
@@ -125,7 +126,7 @@ public class UsuariosUI {
             case 10:
             break;
              case 11:
-                 o.registrarOrden();
+                 o.registrarOrden(usuario_logueado);
             break;
              default:
                  break;
@@ -210,7 +211,7 @@ public void registrarEmpleado()throws IOException{
 
  public void registrarCliente()throws IOException{
  
-   int v_rol=0;
+   int v_rol=2;
     System.out.println("Ingrese el  numero de ID ");
    String identificacion =in.readLine();
     System.out.println("Ingrese el correo ");
@@ -296,8 +297,11 @@ out.print("Cupones registrados  :  ");
 }
 
 }
+/////////////////////////////////////////////////////////////////////SECCION DE ORDEN DE COMPRA DE ALIMENTOS  //////////////////////////////
+public void registrarOrden()throws IOException{
+o.registrarOrden(usuario_logueado);
 
-
+}
 
 
 } 

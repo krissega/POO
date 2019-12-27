@@ -27,8 +27,7 @@ public class Direccion {
         this.usuarioId = usuarioId;
     }
 
-    Direccion() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    Direccion() { 
     }
     
     

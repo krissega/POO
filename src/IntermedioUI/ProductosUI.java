@@ -46,7 +46,7 @@ public class ProductosUI {
     
     
     public void listar_Productos(){
-    out.println("Los productos se listaran de la siguiente manera, primero los platillos, luego los combos ");
+    out.println("Nuestros productos ID, NOMBRE, PRECIO  ");
     Listar_Platillos();
     Listar_Combos();
     }
@@ -66,11 +66,12 @@ public class ProductosUI {
 
   public void Listar_Platillos() {
 
+        out.println("***************************************************************************");  
         out.println("Los Platillos registrados hasta el momento son :  ");
         for (int i = 0; i < log.listarP().size(); i++) {
-            out.println(log.listarP().get(i).getV_nombre() + "  " + log.listarP().get(i).getV_precio());
+            out.println(log.listarP().get(i).getV_ID()+ "  " +log.listarP().get(i).getV_nombre() + "  " + log.listarP().get(i).getV_precio());
         }
-
+        out.println("****************************************************************************");
     }
     
     public void registrarCombo() throws IOException {
