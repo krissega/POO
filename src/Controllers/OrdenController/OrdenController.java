@@ -55,16 +55,16 @@ public class OrdenController {
         mostrarOrden(clave);
     }
 
-    public boolean registrarContenido(int ids, ArrayList<Combo> comb, ArrayList<Platillo> plat) {
+    public boolean registrarContenido(int idOrden, ArrayList<Combo> comb, ArrayList<Platillo> plat) {
 
         boolean done = false;
         if (plat != null) {
             for (int i = 0; i < plat.size(); i++) {
-                done = log.guardarContenidoOrden(ids, ids, plat.get(i).getV_ID());
+                done = log.guardarContenidoOrden(plat.get(i).getV_ID(), 0, idOrden);
             }
         } else if (comb != null) {
             for (int i = 0; i < comb.size(); i++) {
-                done = log.guardarContenidoOrden(ids, ids, comb.get(i).getId());
+                done = log.guardarContenidoOrden(comb.get(i).getId(), 1, idOrden);
             }
         }
         return done;
